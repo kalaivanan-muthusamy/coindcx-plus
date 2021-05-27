@@ -1,11 +1,9 @@
-import { useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
-import Coin from './Coin';
+import Coin from './pages/coin';
 import Main from './Main';
 
 export default function App() {

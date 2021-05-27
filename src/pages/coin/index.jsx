@@ -55,9 +55,9 @@ function Coin() {
         <div>
           <Title>
             {activeCoin?.name}{" "}
-            <Title className="d-inline text-secondary" level={5}>
+            <span className="h5 d-inline text-secondary" level={5}>
               ({activeCoin?.symbol?.toUpperCase()})
-            </Title>
+            </span>
           </Title>
           <Tabs defaultActiveKey="1" onChange={onTabChange}>
             <TabPane tab="Historical Data (CoinDCX)" key="1">

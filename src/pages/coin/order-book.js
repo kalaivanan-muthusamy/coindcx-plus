@@ -1,16 +1,17 @@
 import io from 'socket.io-client';
 import { useEffect } from 'react';
 
-const socketEndpoint = "wss://stream.coindcx.com";
-const socket = io(socketEndpoint, {
-    transports: ['websocket']
-});
-
-
+const socketEndpoint = "wss://stream.coindcx.com/";
 
 function OrderBook({ coinDetails }) {
 
     useEffect(() => {
+
+        const socket = io(socketEndpoint, {
+            transports: ['websocket'],
+            allowEIO3: true
+        });
+        console.log({ socket })
 
         //Join Channel
         socket.emit('join', {
@@ -31,6 +32,9 @@ function OrderBook({ coinDetails }) {
     }, [])
 
 
+    return (
+        <h4>Order Book</h4>
+    )
 
 }
 

@@ -44,9 +44,9 @@ const columns = [
     key: "openCloseDiff",
     render: (text, record) =>
       record?.closeValue > record?.openValue ? (
-        <span class="text-success">+{text}</span>
+        <span className="text-success">+{text}</span>
       ) : (
-        <span class="text-danger">{text}</span>
+        <span className="text-danger">{text}</span>
       ),
   },
   {

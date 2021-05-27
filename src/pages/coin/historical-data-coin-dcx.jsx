@@ -54,11 +54,6 @@ const columns = [
     dataIndex: "volume",
     key: "volume",
   },
-  {
-    title: "Market Cap",
-    dataIndex: "marketCap",
-    key: "marketCap",
-  },
 ];
 
 function HistoricalDataCoinDCX({ coinDetails }) {
@@ -95,6 +90,7 @@ function HistoricalDataCoinDCX({ coinDetails }) {
       highValue: data?.high,
       lowValue: data?.low,
       closeValue: data?.close,
+      volume: new Intl.NumberFormat("en-IN").format(data?.volume),
       open: new Intl.NumberFormat("en-IN", {
         style: "currency",
         currency: "INR",

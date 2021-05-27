@@ -5,7 +5,8 @@ import { useParams } from "react-router-dom";
 import { Tabs } from "antd";
 import HistoricalData from "./historical-data";
 import HistoricalDataCoinDCX from "./historical-data-coin-dcx";
-import OrderBook from "./order-book";
+import OrderBook from "./order-books";
+import TradeHistory from './trade-history';
 
 const { TabPane } = Tabs;
 
@@ -68,6 +69,9 @@ function Coin() {
             </TabPane>
             <TabPane tab="Order Book" key="3">
               <OrderBook coinDetails={activeCoin} />
+            </TabPane>
+            <TabPane tab="Trade History" key="4">
+              <TradeHistory coinDetails={activeCoin} />
             </TabPane>
           </Tabs>
         </div>

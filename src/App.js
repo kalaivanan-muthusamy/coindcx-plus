@@ -1,41 +1,23 @@
 import { useEffect } from 'react';
-import axios from 'axios';
-import crypto from 'crypto'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import Coin from './Coin';
+import Main from './Main';
 
-const baseurl = "https://api.coindcx.com"
-const timeStamp = Math.floor(Date.now());
-
-function App() {
-
-  useEffect(() => {
-    getUserDetails();
-  }, [])
-
-  async function getUserDetails() {
-    console.log(timeStamp);
-    let body = {
-      "timestamp": timeStamp
-    }
-    const payload = new Buffer(JSON.stringify(body)).toString();
-    const signature = crypto.createHmac('sha256', process.env.REACT_APP_COINDCX_SECRET).update(payload).digest('hex')
-    const options = {
-      url: baseurl + "/exchange/v1/funding/fetch_orders",
-      headers: {
-        'X-AUTH-APIKEY': process.env.REACT_APP_COINDCX_KEY,
-        'X-AUTH-SIGNATURE': signature
-      },
-      json: true,
-      body: body
-    }
-    const res = await axios(options);
-  }
-
-
+export default function App() {
   return (
-    <div>
-
-    </div>
+    <Main>
+      <Router>
+        <Switch>
+          <Route path="/coin/:coinSymbol">
+            <Coin />
+          </Route>
+        </Switch>
+      </Router>
+    </Main>
   );
 }
-
-export default App;

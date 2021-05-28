@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Table } from "antd";
+import { SELECTION_NONE } from "antd/lib/table/hooks/useSelection";
 
 const bidColumns = [
   {
@@ -40,18 +41,29 @@ const asksColumns = [
   },
 ];
 
+const intervalIds = []
+
 function OrderBooks({ coinDetails }) {
   const [orderBook, setOrderBook] = useState([]);
+  const [loading, setLoading] = useState(false);
+
 
   useEffect(() => {
+    loadInitial();
+    return () => {
+      intervalIds?.map(id => clearInterval(id));
+    };
+  }, [coinDetails]);
+
+  async function loadInitial() {
+    setLoading(true);
+    await getOrderBookData();
+    setLoading(false);
     const id = setInterval(() => {
       getOrderBookData();
     }, 4000);
-
-    return () => {
-      clearInterval(id);
-    };
-  }, []);
+    intervalIds.push(id)
+  }
 
   async function getOrderBookData() {
     try {
@@ -59,7 +71,7 @@ function OrderBooks({ coinDetails }) {
         `https://public.coindcx.com/market_data/orderbook`,
         {
           params: {
-            pair: `I-${coinDetails?.symbol?.toUpperCase()}_INR`,
+            pair: coinDetails?.pair,
           },
         }
       );
@@ -72,14 +84,16 @@ function OrderBooks({ coinDetails }) {
           }).format(price),
           quantity: orderBookData?.bids[price],
         })),
-        asks: Object.keys(orderBookData?.asks).reverse().map((price, ind) => ({
-          sno: ind + 1,
-          price: new Intl.NumberFormat("en-IN", {
-            style: "currency",
-            currency: "INR",
-          }).format(price),
-          quantity: orderBookData?.asks[price],
-        })),
+        asks: Object.keys(orderBookData?.asks)
+          .reverse()
+          .map((price, ind) => ({
+            sno: ind + 1,
+            price: new Intl.NumberFormat("en-IN", {
+              style: "currency",
+              currency: "INR",
+            }).format(price),
+            quantity: orderBookData?.asks[price],
+          })),
       });
     } catch (err) {
       console.error(err);
@@ -89,10 +103,10 @@ function OrderBooks({ coinDetails }) {
   return (
     <div className="row">
       <div className="col-6">
-        <Table dataSource={orderBook?.bids} columns={bidColumns} />
+        <Table loading={loading} dataSource={orderBook?.bids} columns={bidColumns} />
       </div>
       <div className="col-6">
-        <Table dataSource={orderBook?.asks} columns={asksColumns} />
+        <Table loading={loading} dataSource={orderBook?.asks} columns={asksColumns} />
       </div>
     </div>
   );

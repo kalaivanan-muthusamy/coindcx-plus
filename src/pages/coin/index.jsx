@@ -1,83 +1,73 @@
 import Title from "antd/lib/typography/Title";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Tabs } from "antd";
-import HistoricalData from "./historical-data";
+import { Spin, Tabs } from "antd";
+import { connect } from "react-redux";
 import HistoricalDataCoinDCX from "./historical-data-coin-dcx";
 import OrderBook from "./order-books";
-import TradeHistory from './trade-history';
+import TradeHistory from "./trade-history";
+import '../../styles/pages/index.scss';
 
 const { TabPane } = Tabs;
 
-function Coin() {
-  const [allCoins, setAllCoins] = useState(null);
-  const [activeCoin, setActiveCoin] = useState(null);
+function Coin(props) {
   const { coinSymbol } = useParams();
+  const selectedCoin = props.selectedCoin;
+  const selectedCoinDetails = props?.marketDetails?.find(
+    (a) => a.target_currency_short_name === selectedCoin
+  );
 
   useEffect(() => {
-    getFullDetails();
+    console.log({ coinSymbol });
+    props?.setSelectedCoin(coinSymbol);
   }, []);
-
-  useEffect(() => {
-    if (allCoins) {
-      const match = allCoins?.find(
-        (coin) => coin.symbol === coinSymbol.toLowerCase()
-      );
-      if (match) setActiveCoin(match);
-    }
-  }, [allCoins]);
-
-  useEffect(() => {
-    if (activeCoin) {
-      getCoinDetails();
-    }
-  }, [activeCoin]);
-
-  async function getCoinDetails() {}
-
-  async function getFullDetails() {
-    try {
-      const { data: allCoinsData } = await axios.get(
-        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=INR"
-      );
-      setAllCoins(allCoinsData);
-    } catch (err) {
-      console.error(err);
-    }
-  }
 
   function onTabChange() {}
 
   return (
-    <>
-      {/* Coin Details Header */}
-      {activeCoin && (
+    <div className="coin-details">
+      {selectedCoinDetails ? (
         <div>
           <Title>
-            {activeCoin?.name}{" "}
+            {selectedCoinDetails?.target_currency_name}{" "}
             <span className="h5 d-inline text-secondary" level={5}>
-              ({activeCoin?.symbol?.toUpperCase()})
+              ({selectedCoinDetails?.target_currency_short_name?.toUpperCase()})
             </span>
           </Title>
           <Tabs defaultActiveKey="1" onChange={onTabChange}>
             <TabPane tab="Historical Data (CoinDCX)" key="1">
-              <HistoricalDataCoinDCX coinDetails={activeCoin} />
-            </TabPane>
-            <TabPane tab="Historical Data" key="2">
-              <HistoricalData coinId={activeCoin?.id} />
+              <HistoricalDataCoinDCX coinDetails={selectedCoinDetails} />
             </TabPane>
             <TabPane tab="Order Book" key="3">
-              <OrderBook coinDetails={activeCoin} />
+              <OrderBook coinDetails={selectedCoinDetails} />
             </TabPane>
             <TabPane tab="Trade History" key="4">
-              <TradeHistory coinDetails={activeCoin} />
+              <TradeHistory coinDetails={selectedCoinDetails} />
             </TabPane>
           </Tabs>
         </div>
+      ) : (
+        <div className="text-center">
+          <Spin />
+        </div>
       )}
-    </>
+    </div>
   );
 }
 
-export default Coin;
+const mapStateToProps = (state) => {
+  return {
+    allCoins: state.allCoins,
+    marketDetails: state.marketDetails,
+    selectedCoin: state.selectedCoin,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setSelectedCoin: (coinSymbol) =>
+      dispatch({ type: "SET_SELECTED_COIN", payload: { coinSymbol } }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Coin);

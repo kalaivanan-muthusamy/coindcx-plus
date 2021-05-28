@@ -43,26 +43,36 @@ const columns = [
   },
 ];
 
+const intervalIds = [];
+
 function TradeHistory({ coinDetails }) {
   const [tradeHistory, setTradeHistory] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const id = setInterval(() => {
-      getHistoricalData();
-    }, 4000);
-
+    loadInitial();
     return () => {
-      clearInterval(id);
+      intervalIds?.map((id) => clearInterval(id));
     };
-  }, []);
+  }, [coinDetails]);
 
-  async function getHistoricalData() {
+  async function loadInitial() {
+    setLoading(true);
+    await getTradeHistory();
+    setLoading(false);
+    const id = setInterval(() => {
+      getTradeHistory();
+    }, 4000);
+    intervalIds.push(id);
+  }
+
+  async function getTradeHistory() {
     try {
       const { data: tradeHistoryData } = await axios.get(
         `https://public.coindcx.com/market_data/trade_history`,
         {
           params: {
-            pair: `I-${coinDetails?.symbol?.toUpperCase()}_INR`,
+            pair: coinDetails?.pair,
             limit: 500,
           },
         }
@@ -92,7 +102,9 @@ function TradeHistory({ coinDetails }) {
     }
   }
 
-  return <Table dataSource={tradeHistory} columns={columns} />;
+  return (
+    <Table loading={loading} dataSource={tradeHistory} columns={columns} />
+  );
 }
 
 export default TradeHistory;

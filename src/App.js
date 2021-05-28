@@ -10,18 +10,15 @@ import allSagas from './sagas/index';
 import Coin from './pages/coin';
 import Main from './Main';
 import { reducer } from './reducers/index';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
 
-// dev tools middleware
-const reduxDevTools =
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
-
 // create a redux store with our reducer above and middleware
 let store = createStore(
   reducer,
-  compose(applyMiddleware(sagaMiddleware), reduxDevTools)
+  composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
 
 // run the saga

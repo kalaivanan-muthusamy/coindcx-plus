@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Table } from "antd";
+import { Card, Table } from "antd";
 
 const columns = [
   {
@@ -28,18 +28,6 @@ const columns = [
     title: "Quantity",
     dataIndex: "quantity",
     key: "quantity",
-  },
-
-  {
-    title: "Open-Close Diff",
-    dataIndex: "openCloseDiff",
-    key: "openCloseDiff",
-    render: (text, record) =>
-      record?.closeValue > record?.openValue ? (
-        <span className="text-success">+{text}</span>
-      ) : (
-        <span className="text-danger">{text}</span>
-      ),
   },
 ];
 
@@ -103,13 +91,17 @@ function TradeHistory({ coinDetails }) {
   }
 
   return (
-    <Table
-      size="small"
-      scroll={{ x: "100%" }}
-      loading={loading}
-      dataSource={tradeHistory}
-      columns={columns}
-    />
+    <Card className="gx-card">
+      <div className="gx-table-responsive">
+        <Table
+          size="small"
+          scroll={{ x: "100%" }}
+          loading={loading}
+          dataSource={tradeHistory}
+          columns={columns}
+        />
+      </div>
+    </Card>
   );
 }
 

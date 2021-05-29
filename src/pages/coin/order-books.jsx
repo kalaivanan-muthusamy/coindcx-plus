@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Table } from "antd";
+import { Card, Table } from "antd";
 import { SELECTION_NONE } from "antd/lib/table/hooks/useSelection";
 
 const bidColumns = [
@@ -41,17 +41,16 @@ const asksColumns = [
   },
 ];
 
-const intervalIds = []
+const intervalIds = [];
 
 function OrderBooks({ coinDetails }) {
   const [orderBook, setOrderBook] = useState([]);
   const [loading, setLoading] = useState(false);
 
-
   useEffect(() => {
     loadInitial();
     return () => {
-      intervalIds?.map(id => clearInterval(id));
+      intervalIds?.map((id) => clearInterval(id));
     };
   }, [coinDetails]);
 
@@ -62,7 +61,7 @@ function OrderBooks({ coinDetails }) {
     const id = setInterval(() => {
       getOrderBookData();
     }, 4000);
-    intervalIds.push(id)
+    intervalIds.push(id);
   }
 
   async function getOrderBookData() {
@@ -102,11 +101,31 @@ function OrderBooks({ coinDetails }) {
 
   return (
     <div className="row">
-      <div className="col-6">
-        <Table size="small" scroll={{ x: '100%' }} loading={loading} dataSource={orderBook?.bids} columns={bidColumns} />
+      <div className="col-sm-12 col-md-6">
+        <Card className="gx-card" title="Bids">
+          <div className="gx-table-responsive">
+            <Table
+              size="small"
+              scroll={{ x: "100%" }}
+              loading={loading}
+              dataSource={orderBook?.bids}
+              columns={bidColumns}
+            />
+          </div>
+        </Card>
       </div>
-      <div className="col-6">
-        <Table size="small" scroll={{ x: '100%' }} loading={loading} dataSource={orderBook?.asks} columns={asksColumns} />
+      <div className="col-sm-12 col-md-6">
+        <Card className="gx-card" title="Asks">
+          <div className="gx-table-responsive">
+            <Table
+              size="small"
+              scroll={{ x: "100%" }}
+              loading={loading}
+              dataSource={orderBook?.asks}
+              columns={asksColumns}
+            />
+          </div>
+        </Card>
       </div>
     </div>
   );

@@ -59,9 +59,9 @@ const columns = [
     key: "openCloseDiff",
     render: (text, record) =>
       record?.closeValue > record?.openValue ? (
-        <span className="text-success">+{text}</span>
+        <span className="text-nowrap text-success">+{text}</span>
       ) : (
-        <span className="text-danger">{text}</span>
+        <span className="text-nowrap text-danger">{text}</span>
       ),
   },
   {
@@ -146,7 +146,7 @@ function HistoricalDataCoinDCX({ coinDetails }) {
     <div className="row">
       <div className="col-sm-12 mr-auto">
         <Select
-          className="me-2"
+          className="me-2 mt-1"
           defaultValue={dataInterval}
           style={{ width: 120 }}
           onChange={onIntervalChange}
@@ -158,27 +158,23 @@ function HistoricalDataCoinDCX({ coinDetails }) {
         <RangePicker
           onChange={onDateRangeChange}
           defaultValue={[startTime, endTime]}
-          className="me-2"
+          className="me-2 mt-1"
         />
       </div>
       <div className="col-md-12 mt-4">
         <Card className="gx-card" title="Historical Data">
-          <Table
-            scroll={{ x: "100%" }}
-            size="small"
-            loading={loading}
-            dataSource={historicalData}
-            columns={columns}
-          />
+          <div className="gx-table-responsive">
+            <Table
+              scroll={{ x: "100%" }}
+              size="small"
+              loading={loading}
+              dataSource={historicalData}
+              columns={columns}
+            />
+          </div>
         </Card>
       </div>
-      {/* <div className="col-md-2 mt-4">
-        <Card className="gx-card" title="Data Points">
-          <p>Highest Opening Price: <b>Rs.350</b></p>
-          <p>Lowers Opening Price: <b>Rs.350</b></p>
-
-        </Card>
-      </div> */}
+  
       <div className="col-sm-12">
         <Card className="gx-card" title="High - Low Difference">
           <ResponsiveContainer width="100%" height={300}>

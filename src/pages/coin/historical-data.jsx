@@ -7,6 +7,7 @@ const columns = [
     title: "S.No",
     dataIndex: "sno",
     key: "sno",
+    textWrap: 'word-break',
   },
   {
     title: "Date",
@@ -37,6 +38,7 @@ const columns = [
     title: "High-Low Diff",
     dataIndex: "highLowDiff",
     key: "highLowDiff",
+    textWrap: 'word-break',
   },
   {
     title: "Open-Close Diff",
@@ -138,7 +140,7 @@ function HistoricalData({ coinId }) {
     });
   }
 
-  return <Table size="small" scroll={{ x: '100%' }} dataSource={historicalData} columns={columns} />;
+  return <Table className='gx-table-responsive' size="small" scroll={{ x: '100%' }} dataSource={historicalData} columns={columns} />;
 }
 
 export default HistoricalData;

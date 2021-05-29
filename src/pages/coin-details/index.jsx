@@ -15,11 +15,12 @@ import OrderBook from "./order-books";
 import TradeHistory from "./trade-history";
 import "../../styles/pages/index.scss";
 import TradeChart from "./trade-chart";
+import Ratings from './ratings';
 
 const { TabPane } = Tabs;
 // const socket = io("ws://stream.coindcx.com", { transports: ["websocket"] });
 
-function Coin(props) {
+function CoinDetails(props) {
   const [coinDetails, setCoinDetails] = useState({});
   const { coinSymbol } = useParams();
   const selectedCoin = props.selectedCoin;
@@ -170,10 +171,13 @@ function Coin(props) {
               <TabPane tab="Historical Data" key="1">
                 <HistoricalDataCoinDCX coinDetails={selectedCoinDetails} />
               </TabPane>
-              <TabPane tab="Order Book" key="2">
+              <TabPane tab="Ratings" key="2">
+                <Ratings coinDetails={selectedCoinDetails} />
+              </TabPane>
+              <TabPane tab="Order Book" key="3">
                 <OrderBook coinDetails={selectedCoinDetails} />
               </TabPane>
-              <TabPane tab="Trade History" key="3">
+              <TabPane tab="Trade History" key="4">
                 <TradeHistory coinDetails={selectedCoinDetails} />
               </TabPane>
             </Tabs>
@@ -203,4 +207,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Coin);
+export default connect(mapStateToProps, mapDispatchToProps)(CoinDetails);

@@ -7,10 +7,11 @@ import {
 } from "react-router-dom";
 import { Provider } from "react-redux";
 import allSagas from './sagas/index';
-import Coin from './pages/coin';
+import CoinDetails from './pages/coin-details';
 import Main from './Main';
 import { reducer } from './reducers/index';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import Coins from "./pages/coins";
 
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -30,8 +31,11 @@ export default function App() {
       <Router>
         <Main>
           <Switch>
+            <Route exact path="/">
+              <Coins />
+            </Route>
             <Route path="/coins/:coinSymbol">
-              <Coin />
+              <CoinDetails />
             </Route>
           </Switch>
         </Main>

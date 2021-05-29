@@ -49,12 +49,12 @@ function SidebarContent(props) {
             mode="inline"
           >
             <MenuItemGroup key="main" className="gx-menu-group" title={"Main"}>
-              <Menu.Item key="dashboard">
+              {/* <Menu.Item key="dashboard">
                 <NavLink exact activeClassName="active" to="/">
                   <i className="icon icon-home" />
                   Dashboard
                 </NavLink>
-              </Menu.Item>
+              </Menu.Item> */}
               <Menu.Item key="coins">
                 <NavLink activeClassName="active" to="/coins">
                   <i className="icon icon-crypto" />

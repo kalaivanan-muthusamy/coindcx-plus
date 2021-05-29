@@ -138,7 +138,7 @@ function HistoricalData({ coinId }) {
     });
   }
 
-  return <Table dataSource={historicalData} columns={columns} />;
+  return <Table size="small" scroll={{ x: '100%' }} dataSource={historicalData} columns={columns} />;
 }
 
 export default HistoricalData;

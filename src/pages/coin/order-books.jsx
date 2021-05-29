@@ -103,10 +103,10 @@ function OrderBooks({ coinDetails }) {
   return (
     <div className="row">
       <div className="col-6">
-        <Table loading={loading} dataSource={orderBook?.bids} columns={bidColumns} />
+        <Table size="small" scroll={{ x: '100%' }} loading={loading} dataSource={orderBook?.bids} columns={bidColumns} />
       </div>
       <div className="col-6">
-        <Table loading={loading} dataSource={orderBook?.asks} columns={asksColumns} />
+        <Table size="small" scroll={{ x: '100%' }} loading={loading} dataSource={orderBook?.asks} columns={asksColumns} />
       </div>
     </div>
   );

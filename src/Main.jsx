@@ -2,6 +2,7 @@ import { Layout } from "antd";
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import AppHeader from "./components/header";
+import Sidebar from "./components/sidebar";
 
 const { Content, Footer } = Layout;
 
@@ -11,13 +12,16 @@ function Main(props) {
   }, []);
 
   return (
-    <Layout className="gx-app-layout">
-      <AppHeader />
-      <Content className="gx-layout-content gx-container-wrap">
-        <div className="gx-main-content-wrapper">{props.children}</div>
-      </Content>
-      <Footer style={{ textAlign: "center" }}>Created by Kalaivanan</Footer>
-    </Layout>
+    <div>
+      <Sidebar />
+      <Layout className="gx-app-layout">
+        <AppHeader />
+        <Content className="gx-layout-content gx-container-wrap">
+          <div className="gx-main-content-wrapper">{props.children}</div>
+        </Content>
+        <Footer style={{ textAlign: "center" }}>Created by Kalaivanan</Footer>
+      </Layout>
+    </div>
   );
 }
 

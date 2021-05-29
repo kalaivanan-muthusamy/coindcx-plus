@@ -103,7 +103,13 @@ function TradeHistory({ coinDetails }) {
   }
 
   return (
-    <Table loading={loading} dataSource={tradeHistory} columns={columns} />
+    <Table
+      size="small"
+      scroll={{ x: "100%" }}
+      loading={loading}
+      dataSource={tradeHistory}
+      columns={columns}
+    />
   );
 }
 

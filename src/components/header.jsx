@@ -3,18 +3,17 @@ import SearchBox from "./search-box";
 import HorizontalMenu from "./horizontal-nav";
 import { Link, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import { useState } from 'react';
+import { useState } from "react";
 
 const { Header } = Layout;
 
 function AppHeader(props) {
-  const [filteredCoins, setFilteredCoins] = useState(null)
-  const history = useHistory()
+  const [filteredCoins, setFilteredCoins] = useState(null);
+  const history = useHistory();
 
   function onCoinSelect(val) {
     props?.setSelectedCoin(val);
     history.push(`/coins/${val}`);
-
   }
 
   function onSearch(searchText) {
@@ -37,13 +36,14 @@ function AppHeader(props) {
               <i
                 className="gx-icon-btn icon icon-menu"
                 onClick={() => {
-                  // dispatch(toggleCollapsedSideNav(!navCollapsed));
+                  props?.toggleCollapsedSideNav(!props?.uiSettings?.navCollapsed);
                 }}
               />
             </div>
             <Link to="/">
               <img
                 alt=""
+                style={{ height: "45px" }}
                 className="gx-d-block gx-d-lg-none gx-pointer gx-mr-xs-3 gx-pt-xs-1 gx-w-logo"
                 src={"/images/logo.png"}
               />
@@ -73,11 +73,13 @@ function AppHeader(props) {
                   placement="bottomRight"
                   content={
                     <div className="gx-d-flex">
-                      <SearchBox
+                      <AutoComplete
                         styleName="gx-popover-search-bar"
                         placeholder="Search Coin..."
-                        //   onChange={updateSearchChatUser}
-                        //   value={searchText}
+                        style={{ width: 250 }}
+                        options={filteredCoins || props?.allCoins || []}
+                        onSelect={onCoinSelect}
+                        onSearch={onSearch}
                       />
                     </div>
                   }
@@ -107,11 +109,14 @@ function AppHeader(props) {
 const mapStateToProps = (state) => {
   return {
     allCoins: state.allCoins,
+    uiSettings: state.uiSettings,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    toggleCollapsedSideNav: (navCollapsed) =>
+      dispatch({ type: "TOGGLE_COLLAPSED_NAV", payload: { navCollapsed } }),
     setSelectedCoin: (coinSymbol) =>
       dispatch({ type: "SET_SELECTED_COIN", payload: { coinSymbol } }),
   };

@@ -12,8 +12,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { updateHistoryData } from './util/index';
-
+import { updateHistoryData } from "./util/index";
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -134,7 +133,6 @@ function HistoricalDataCoinDCX({ coinDetails }) {
     }
   }
 
-
   function onIntervalChange(val) {
     setDataInterval(val);
   }
@@ -166,6 +164,7 @@ function HistoricalDataCoinDCX({ coinDetails }) {
       <div className="col-md-12 mt-4">
         <Card className="gx-card" title="Historical Data">
           <Table
+            scroll={{ x: "100%" }}
             size="small"
             loading={loading}
             dataSource={historicalData}
@@ -183,14 +182,17 @@ function HistoricalDataCoinDCX({ coinDetails }) {
       <div className="col-sm-12">
         <Card className="gx-card" title="High - Low Difference">
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={historicalData?.slice()?.reverse?.()}>
+            <LineChart
+              margin={{ top: 5, right: 30, left: 0, bottom: 5 }}
+              data={historicalData?.slice()?.reverse?.()}
+            >
               <Line
                 name="High Low Diff"
                 type="monotone"
                 dataKey="highLowDiffValue"
                 stroke="#8884d8"
               />
-               <Line
+              <Line
                 name="Open Close Diff"
                 type="monotone"
                 dataKey="openCloseDiffValue"

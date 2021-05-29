@@ -17,7 +17,7 @@ import "../../styles/pages/index.scss";
 import TradeChart from "./trade-chart";
 
 const { TabPane } = Tabs;
-const socket = io("ws://stream.coindcx.com", { transports: ["websocket"] });
+// const socket = io("ws://stream.coindcx.com", { transports: ["websocket"] });
 
 function Coin(props) {
   const [coinDetails, setCoinDetails] = useState({});
@@ -44,19 +44,19 @@ function Coin(props) {
   useEffect(() => {
     props?.setSelectedCoin(coinSymbol);
 
-    socket.emit("join", {
-      channelName: `I-${coinSymbol}_INR`,
-    });
+    // socket.emit("join", {
+    //   channelName: `I-${coinSymbol}_INR`,
+    // });
 
-    socket.on("new-trade", (response) => {
-      console.log(response.data);
-    });
+    // socket.on("new-trade", (response) => {
+    //   console.log(response.data);
+    // });
 
-    return () => {
-      socket.emit("leave", {
-        channelName: `I-${coinSymbol}_INR`,
-      });
-    };
+    // return () => {
+    //   socket.emit("leave", {
+    //     channelName: `I-${coinSymbol}_INR`,
+    //   });
+    // };
   }, []);
 
   async function getCurrentPrice() {
@@ -64,7 +64,6 @@ function Coin(props) {
       const { data: currentPrices } = await axios.get(
         "https://public.coindcx.com/market_data/current_prices"
       );
-      console.log(Object.entries(currentPrices));
       const coinPrice = Object.entries(currentPrices)?.find(
         (price) => price?.[0] === `${coinSymbol}INR`
       )?.[1];
@@ -115,7 +114,7 @@ function Coin(props) {
             <div className="gx-card">
               <div className="gx-card-body">
                 <Row>
-                  <Col xl={6} lg={12} md={12} sm={12} xs={24}>
+                  <Col xl={8} lg={12} md={12} sm={12} xs={24}>
                     <div className="gx-wel-ema gx-pt-xl-2">
                       <Title className="mb-2">
                         {selectedCoinDetails?.target_currency_name}{" "}
@@ -159,11 +158,8 @@ function Coin(props) {
                     </div>
                   </Col>
 
-                  <Col xl={12} lg={12} md={12} sm={12} xs={24}>
+                  <Col xl={16} lg={12} md={12} sm={12} xs={24}>
                     <TradeChart />
-                  </Col>
-                  <Col xl={6} lg={24} md={24} sm={24} xs={24}>
-                    <span>WORK IN PROGRESS</span>
                   </Col>
                 </Row>
               </div>

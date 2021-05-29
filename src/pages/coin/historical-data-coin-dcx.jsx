@@ -163,7 +163,7 @@ function HistoricalDataCoinDCX({ coinDetails }) {
           className="me-2"
         />
       </div>
-      <div className="col-md-8 mt-4">
+      <div className="col-md-12 mt-4">
         <Card className="gx-card" title="Historical Data">
           <Table
             size="small"
@@ -173,11 +173,13 @@ function HistoricalDataCoinDCX({ coinDetails }) {
           />
         </Card>
       </div>
-      <div className="col-md-4 mt-4">
+      {/* <div className="col-md-2 mt-4">
         <Card className="gx-card" title="Data Points">
-          <p>WORK IN PROGRESS</p>
+          <p>Highest Opening Price: <b>Rs.350</b></p>
+          <p>Lowers Opening Price: <b>Rs.350</b></p>
+
         </Card>
-      </div>
+      </div> */}
       <div className="col-sm-12">
         <Card className="gx-card" title="High - Low Difference">
           <ResponsiveContainer width="100%" height={300}>

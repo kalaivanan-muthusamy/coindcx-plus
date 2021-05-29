@@ -2,8 +2,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import {
-  Area,
-  AreaChart,
   CartesianGrid,
   Line,
   LineChart,
@@ -19,7 +17,7 @@ function TradeChart(props) {
 
   useEffect(() => {
     getHistoricalData();
-  }, []);
+  }, [props?.coinPair]);
 
   async function getHistoricalData() {
     try {

@@ -141,6 +141,7 @@ function HistoricalDataCoinDCX({ coinDetails }) {
       lowValue: data?.low,
       closeValue: data?.close,
       highLowDiffValue: data?.high - data?.low,
+      openCloseDiffValue: data?.close - data?.open,
       volume: new Intl.NumberFormat("en-IN").format(data?.volume),
       open: new Intl.NumberFormat("en-IN", {
         style: "currency",
@@ -198,7 +199,7 @@ function HistoricalDataCoinDCX({ coinDetails }) {
         />
       </div>
       <div className="col-md-8 mt-4">
-        <Card title="Historical Data">
+        <Card className="gx-card" title="Historical Data">
           <Table
             size="small"
             loading={loading}
@@ -208,12 +209,12 @@ function HistoricalDataCoinDCX({ coinDetails }) {
         </Card>
       </div>
       <div className="col-md-4 mt-4">
-        <Card title="Data Points">
+        <Card className="gx-card" title="Data Points">
           <h4></h4>
         </Card>
       </div>
-      <div className="col-sm-12 mt-3 ">
-        <Card title="High - Low Difference">
+      <div className="col-sm-12">
+        <Card className="gx-card" title="High - Low Difference">
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={historicalData?.slice()?.reverse?.()}>
               <Line
@@ -221,6 +222,12 @@ function HistoricalDataCoinDCX({ coinDetails }) {
                 type="monotone"
                 dataKey="highLowDiffValue"
                 stroke="#8884d8"
+              />
+               <Line
+                name="Open Close Diff"
+                type="monotone"
+                dataKey="openCloseDiffValue"
+                stroke="#bbb"
               />
               <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
               <XAxis dataKey="date" />

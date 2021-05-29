@@ -2,6 +2,7 @@ import { AutoComplete, Layout, Menu } from "antd";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
+import AppHeader from "./components/header";
 
 const { Header, Content, Footer } = Layout;
 
@@ -35,37 +36,10 @@ function Main(props) {
   }
 
   return (
-    <Layout>
-      <Header
-        className="d-flex align-items-center"
-        style={{ position: "fixed", zIndex: 1, width: "100%" }}
-      >
-        <div className="logo" />
-        <Menu
-          className="w-100"
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={["1"]}
-        >
-          <Menu.Item key="1">Coin Details</Menu.Item>
-        </Menu>
-        <AutoComplete
-          value={selectedCoin}
-          options={searchOptions || props?.allCoins}
-          style={{
-            width: 200,
-          }}
-          onSelect={onSelect}
-          onSearch={onSearch}
-          onChange={onChange}
-          placeholder="Select Coin"
-        />
-      </Header>
-      <Content
-        className="site-layout pt-4 pb-5"
-        style={{ padding: "0 50px", marginTop: 64 }}
-      >
-        {props.children}
+    <Layout className="gx-app-layout">
+      <AppHeader />
+      <Content className="gx-layout-content gx-container-wrap">
+        <div className="gx-main-content-wrapper">{props.children}</div>
       </Content>
       <Footer style={{ textAlign: "center" }}>Created by Kalaivanan</Footer>
     </Layout>

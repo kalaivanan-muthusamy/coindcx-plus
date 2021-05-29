@@ -40,7 +40,7 @@ function TradeChart(props) {
 
   return (
     <div className="gx-site-dash gx-pr-xl-5 gx-pt-3 gx-pt-xl-0 gx-pt-xl-2">
-      <h6 className="gx-text-uppercase gx-mb-2 gx-mb-xl-4">Site Visits</h6>
+      <h6 className="gx-text-uppercase gx-mb-2 gx-mb-xl-4">High Low Data</h6>
       <ResponsiveContainer width="100%" height={140}>
         <LineChart
           data={historicalData?.slice()?.reverse()}

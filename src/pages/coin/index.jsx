@@ -1,22 +1,26 @@
 import Title from "antd/lib/typography/Title";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Col, Row, Spin, Tabs } from "antd";
 import {
-  MailOutlined,
-  MessageOutlined,
-  BellOutlined,
-  UnorderedListOutlined,
+  UpCircleFilled,
+  DownCircleFilled,
+  SnippetsFilled,
 } from "@ant-design/icons";
 import { connect } from "react-redux";
+import io from "socket.io-client";
+import axios from "axios";
 import HistoricalDataCoinDCX from "./historical-data-coin-dcx";
 import OrderBook from "./order-books";
 import TradeHistory from "./trade-history";
 import "../../styles/pages/index.scss";
+import TradeChart from "./trade-chart";
 
 const { TabPane } = Tabs;
+const socket = io("ws://stream.coindcx.com", { transports: ["websocket"] });
 
 function Coin(props) {
+  const [coinDetails, setCoinDetails] = useState({});
   const { coinSymbol } = useParams();
   const selectedCoin = props.selectedCoin;
   const selectedCoinDetails = props?.marketDetails?.find(
@@ -24,9 +28,82 @@ function Coin(props) {
   );
 
   useEffect(() => {
-    console.log({ coinSymbol });
+    getInitialDetails();
+  }, [coinSymbol]);
+
+  async function getInitialDetails() {
+    const priceDetailsAsync = getCurrentPrice();
+    const priceChangesAsync = getPriceChanges();
+    await Promise.all([priceDetailsAsync, priceChangesAsync]);
+    setCoinDetails({
+      ...(await priceDetailsAsync),
+      ...(await priceChangesAsync),
+    });
+  }
+
+  useEffect(() => {
     props?.setSelectedCoin(coinSymbol);
+
+    socket.emit("join", {
+      channelName: `I-${coinSymbol}_INR`,
+    });
+
+    socket.on("new-trade", (response) => {
+      console.log(response.data);
+    });
+
+    return () => {
+      socket.emit("leave", {
+        channelName: `I-${coinSymbol}_INR`,
+      });
+    };
   }, []);
+
+  async function getCurrentPrice() {
+    try {
+      const { data: currentPrices } = await axios.get(
+        "https://public.coindcx.com/market_data/current_prices"
+      );
+      console.log(Object.entries(currentPrices));
+      const coinPrice = Object.entries(currentPrices)?.find(
+        (price) => price?.[0] === `${coinSymbol}INR`
+      )?.[1];
+      return {
+        price: new Intl.NumberFormat("en-IN", {
+          style: "currency",
+          currency: "INR",
+        }).format(coinPrice),
+      };
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function getPriceChanges() {
+    try {
+      const { data: priceChanges } = await axios.get(
+        "https://public.coindcx.com/market_data/price_changes"
+      );
+      return {
+        high: new Intl.NumberFormat("en-IN", {
+          style: "currency",
+          currency: "INR",
+        }).format(priceChanges[`${coinSymbol}INR_high`]),
+        low: new Intl.NumberFormat("en-IN", {
+          style: "currency",
+          currency: "INR",
+        }).format(priceChanges[`${coinSymbol}INR_low`]),
+        percent_change: new Intl.NumberFormat("en-IN").format(
+          priceChanges[`${coinSymbol}INR_percent_change`]
+        ),
+        vol: new Intl.NumberFormat("en-IN").format(
+          priceChanges[`${coinSymbol}INR_vol`]
+        ),
+      };
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   function onTabChange() {}
 
@@ -40,7 +117,7 @@ function Coin(props) {
                 <Row>
                   <Col xl={6} lg={12} md={12} sm={12} xs={24}>
                     <div className="gx-wel-ema gx-pt-xl-2">
-                      <Title>
+                      <Title className="mb-2">
                         {selectedCoinDetails?.target_currency_name}{" "}
                         <span className="h5 d-inline text-secondary" level={5}>
                           (
@@ -48,48 +125,45 @@ function Coin(props) {
                           )
                         </span>
                       </Title>
-                      <ul className="gx-list-group">
+                      <h2 class="gx-fs-xxxl gx-font-weight-medium">
+                        {coinDetails?.price}
+                        <span
+                          className={`h4 ms-2 gx-chart-${
+                            coinDetails?.percent_change > 0 ? "up" : "down"
+                          }`}
+                        >
+                          {coinDetails?.percent_change}%{" "}
+                          <i className="icon icon-menu-up gx-fs-sm" />
+                        </span>
+                      </h2>
+                      <ul className="gx-list-group mt-4">
                         <li>
-                          <MessageOutlined />
-
-                          <span>5 Unread messages</span>
+                          <UpCircleFilled />
+                          <span className="gx-text-grey">
+                            24H High: <span>{coinDetails?.high}</span>
+                          </span>
                         </li>
                         <li>
-                          <MailOutlined />
-                          <span>2 Pending invitations</span>
+                          <DownCircleFilled />
+                          <span className="gx-text-grey">
+                            24H Low: <span>{coinDetails?.low}</span>
+                          </span>
                         </li>
                         <li>
-                          <UnorderedListOutlined />
-                          <span>7 Due tasks</span>
-                        </li>
-                        <li>
-                          <BellOutlined />
-                          <span>3 Other notifications</span>
+                          <SnippetsFilled />
+                          <span className="gx-text-grey">
+                            24H Volume: <span>{coinDetails?.vol}</span>
+                          </span>
                         </li>
                       </ul>
                     </div>
                   </Col>
 
-                  <Col
-                    xl={6}
-                    lg={12}
-                    md={12}
-                    sm={12}
-                    xs={24}
-                    className="gx-audi-col"
-                  >
-                    {/* <SiteAudience /> */}
+                  <Col xl={12} lg={12} md={12} sm={12} xs={24}>
+                    <TradeChart />
                   </Col>
-
-                  <Col
-                    xl={12}
-                    lg={24}
-                    md={24}
-                    sm={24}
-                    xs={24}
-                    className="gx-visit-col"
-                  >
-                    {/* <SiteVisit /> */}
+                  <Col xl={6} lg={24} md={24} sm={24} xs={24}>
+                    <span>WORK IN PROGRESS</span>
                   </Col>
                 </Row>
               </div>

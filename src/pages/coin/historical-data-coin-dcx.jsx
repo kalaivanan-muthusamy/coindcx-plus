@@ -12,6 +12,8 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { updateHistoryData } from './util/index';
+
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -132,43 +134,6 @@ function HistoricalDataCoinDCX({ coinDetails }) {
     }
   }
 
-  function updateHistoryData(ohlcData) {
-    return ohlcData?.map((data, ind) => ({
-      sno: ind + 1,
-      date: new Intl.DateTimeFormat("en-IN").format(data?.time),
-      openValue: data?.open,
-      highValue: data?.high,
-      lowValue: data?.low,
-      closeValue: data?.close,
-      highLowDiffValue: data?.high - data?.low,
-      openCloseDiffValue: data?.close - data?.open,
-      volume: new Intl.NumberFormat("en-IN").format(data?.volume),
-      open: new Intl.NumberFormat("en-IN", {
-        style: "currency",
-        currency: "INR",
-      }).format(data?.open),
-      high: new Intl.NumberFormat("en-IN", {
-        style: "currency",
-        currency: "INR",
-      }).format(data?.high),
-      low: new Intl.NumberFormat("en-IN", {
-        style: "currency",
-        currency: "INR",
-      }).format(data?.low),
-      close: new Intl.NumberFormat("en-IN", {
-        style: "currency",
-        currency: "INR",
-      }).format(data?.close),
-      openCloseDiff: new Intl.NumberFormat("en-IN", {
-        style: "currency",
-        currency: "INR",
-      }).format(data?.close - data?.open),
-      highLowDiff: new Intl.NumberFormat("en-IN", {
-        style: "currency",
-        currency: "INR",
-      }).format(data?.high - data?.low),
-    }));
-  }
 
   function onIntervalChange(val) {
     setDataInterval(val);
@@ -210,7 +175,7 @@ function HistoricalDataCoinDCX({ coinDetails }) {
       </div>
       <div className="col-md-4 mt-4">
         <Card className="gx-card" title="Data Points">
-          <h4></h4>
+          <p>WORK IN PROGRESS</p>
         </Card>
       </div>
       <div className="col-sm-12">

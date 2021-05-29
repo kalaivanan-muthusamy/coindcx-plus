@@ -20,7 +20,7 @@ function* fetchMarketDetails() {
 }
 
 function* setSelectedCoin({ payload }) {
-    yield put({ type: "SET_SELECTED_COINN", coinSymbol: payload.coinSymbol });
+    yield put({ type: "SET_SELECTED_COINN", coinSymbol: payload.coinSymbol, coinPair: `I-${payload?.coinSymbol}_INR` });
 }
 
 function* allSagas() {

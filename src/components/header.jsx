@@ -1,11 +1,33 @@
-import { Layout, Popover } from "antd";
+import { AutoComplete, Layout, Popover } from "antd";
 import SearchBox from "./search-box";
 import HorizontalMenu from "./horizontal-nav";
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import { useState } from 'react';
 
 const { Header } = Layout;
 
-function AppHeader() {
+function AppHeader(props) {
+  const [filteredCoins, setFilteredCoins] = useState(null)
+  const history = useHistory()
+
+  function onCoinSelect(val) {
+    props?.setSelectedCoin(val);
+    history.push(`/coins/${val}`);
+
+  }
+
+  function onSearch(searchText) {
+    const stext = searchText.toLowerCase();
+    setFilteredCoins(
+      props?.allCoins?.filter(
+        (a) =>
+          a?.label?.toLowerCase()?.includes?.(stext) ||
+          a?.value?.toLowerCase()?.includes?.(stext)
+      )
+    );
+  }
+
   return (
     <div className="gx-header-horizontal gx-header-horizontal-dark gx-below-header-horizontal">
       <Header className="gx-header-horizontal-main">
@@ -35,12 +57,13 @@ function AppHeader() {
               />
             </Link>
             <div className="gx-header-search gx-d-none gx-d-lg-flex">
-              <SearchBox
-                styleName="gx-lt-icon-search-bar-lg"
+              <AutoComplete
+                style={{ width: 250 }}
+                options={filteredCoins || props?.allCoins || []}
                 placeholder="Search Coin..."
-                //   onChange={updateSearchChatUser}
-                //   value={searchText}
-              />
+                onSelect={onCoinSelect}
+                onSearch={onSearch}
+              ></AutoComplete>
             </div>
 
             <ul className="gx-header-notifications gx-ml-auto">
@@ -81,4 +104,17 @@ function AppHeader() {
   );
 }
 
-export default AppHeader;
+const mapStateToProps = (state) => {
+  return {
+    allCoins: state.allCoins,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setSelectedCoin: (coinSymbol) =>
+      dispatch({ type: "SET_SELECTED_COIN", payload: { coinSymbol } }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppHeader);

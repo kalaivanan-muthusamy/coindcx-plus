@@ -14,7 +14,7 @@ export function reducer(state = initialState, action) {
         case 'MARKET_DETAILS_FETCH_SUCCESS':
             return { ...state, marketDetails: action.marketDetails, allCoins: action.allCoins, marketDetailsLoading: false };
         case 'SET_SELECTED_COINN':
-            return { ...state, selectedCoin: action.coinSymbol }
+            return { ...state, selectedCoin: action.coinSymbol, coinPair: action.coinPair }
         default:
             return state;   
     }

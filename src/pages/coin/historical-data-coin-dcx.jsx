@@ -19,7 +19,7 @@ const { RangePicker } = DatePicker;
 
 const columns = [
   {
-    title: "S.No",
+    title: "S.N",
     dataIndex: "sno",
     key: "sno",
   },

@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Card, Table } from "antd";
-import { SELECTION_NONE } from "antd/lib/table/hooks/useSelection";
 
 const bidColumns = [
   {
-    title: "S.No",
+    title: "S.N",
     dataIndex: "sno",
     key: "sno",
   },

@@ -1,7 +1,5 @@
 import React from "react";
 import { Menu } from "antd";
-// import SidebarLogo from "./SidebarLogo";
-// import UserProfile from "./UserProfile";
 import {
   NAV_STYLE_NO_HEADER_EXPANDED_SIDEBAR,
   NAV_STYLE_NO_HEADER_MINI_SIDEBAR,
@@ -11,7 +9,6 @@ import { connect } from "react-redux";
 import { NavLink, Link } from "react-router-dom";
 import CustomScrollbars from "./custom-scrollbar";
 
-const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
 function SidebarContent(props) {
@@ -27,21 +24,14 @@ function SidebarContent(props) {
     }
     return "";
   };
-  const getNavStyleSubMenuClass = (navStyle) => {
-    if (navStyle === NAV_STYLE_NO_HEADER_MINI_SIDEBAR) {
-      return "gx-no-header-submenu-popup";
-    }
-    return "";
-  };
 
   return (
     <>
-      {/* <SidebarLogo /> */}
       <div className="gx-layout-sider-header">
       <Link to="/">
         <img
           alt=""
-          style={{ height: "35px" }}
+          style={{ height: "45px" }}
           className="gx-d-block gx-d-lg-none gx-pointer gx-mr-xs-3 gx-pt-xs-1 gx-w-logo"
           src={"/images/logo.png"}
         />
@@ -51,8 +41,6 @@ function SidebarContent(props) {
         <div
           className={`gx-sidebar-notifications ${getNoHeaderClass(navStyle)}`}
         >
-          {/* <UserProfile />
-          <AppsNavigation /> */}
         </div>
         <CustomScrollbars className="gx-layout-sider-scrollbar">
           <Menu

@@ -43,7 +43,7 @@ function AppHeader(props) {
             <Link to="/">
               <img
                 alt=""
-                style={{ height: "45px" }}
+                style={{ height: "55px" }}
                 className="gx-d-block gx-d-lg-none gx-pointer gx-mr-xs-3 gx-pt-xs-1 gx-w-logo"
                 src={"/images/logo.png"}
               />

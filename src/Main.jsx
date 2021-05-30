@@ -3,13 +3,35 @@ import { useEffect } from "react";
 import { connect } from "react-redux";
 import AppHeader from "./components/header";
 import Sidebar from "./components/sidebar";
+import io from "socket.io-client";
 
 const { Content, Footer } = Layout;
+const socketEndpoint = "ws://stream.coindcx.com";
+const socket = io(socketEndpoint, {
+  transports: ["websocket"],
+});
 
 function Main(props) {
   useEffect(() => {
     props.getAllCoinDetails();
+    return () => {
+      // leave a channel
+    };
   }, []);
+
+  function subscribeUpdatePrices() {
+    const channelName = "24_hour_price_changes";
+    //Join Channel
+    socket.emit("join", {
+      channelName: channelName,
+    });
+
+    //Listen update on channelName
+    socket.on("update-prices", (response) => {
+      const updatedPrices = JSON.parse(response.data);
+      console.log({ updatedPrices });
+    });
+  }
 
   return (
     <div>

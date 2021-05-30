@@ -34,5 +34,9 @@ export function updateHistoryData(ohlcData) {
             style: "currency",
             currency: "INR",
         }).format(data?.high - data?.low),
+        openHighDiff: new Intl.NumberFormat("en-IN", {
+            style: "currency",
+            currency: "INR",
+        }).format(data?.high - data?.open),
     }));
 }

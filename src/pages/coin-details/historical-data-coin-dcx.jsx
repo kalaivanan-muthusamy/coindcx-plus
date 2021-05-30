@@ -54,6 +54,17 @@ const columns = [
     key: "highLowDiff",
   },
   {
+    title: "OH Diff",
+    dataIndex: "openHighDiff",
+    key: "openHighDiff",
+    render: (text, record) =>
+      record?.highValue > record?.openValue ? (
+        <span className="text-nowrap text-success">+{text}</span>
+      ) : (
+        <span className="text-nowrap text-danger">{text}</span>
+      ),
+  },
+  {
     title: "OC Diff",
     dataIndex: "openCloseDiff",
     key: "openCloseDiff",

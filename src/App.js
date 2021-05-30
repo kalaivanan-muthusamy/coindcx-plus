@@ -4,6 +4,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Redirect,
 } from "react-router-dom";
 import { Provider } from "react-redux";
 import allSagas from './sagas/index';
@@ -32,6 +33,9 @@ export default function App() {
         <Main>
           <Switch>
             <Route exact path="/">
+              <Redirect to="/coins" />
+            </Route>
+            <Route exact path="/coins">
               <Coins />
             </Route>
             <Route path="/coins/:coinSymbol">

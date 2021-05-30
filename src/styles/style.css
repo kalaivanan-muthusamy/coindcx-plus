@@ -26454,7 +26454,6 @@ a.gx-btn-outline-orange:disabled {
 }
 /*Base Styles*/
 body {
-  overflow: hidden;
   -webkit-transition: all 0.3s ease-out;
   -moz-transition: all 0.3s ease-out;
   -ms-transition: all 0.3s ease-out;
@@ -30080,7 +30079,7 @@ h6,
   }
 }
 .gx-container-wrap .gx-main-content-wrapper {
-  width: 94vw;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
   padding-left: 16px;

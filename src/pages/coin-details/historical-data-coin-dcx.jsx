@@ -76,6 +76,17 @@ const columns = [
       ),
   },
   {
+    title: "LC Diff",
+    dataIndex: "lowCloseDiff",
+    key: "lowCloseDiff",
+    render: (text, record) =>
+      record?.closeValue > record?.lowValue ? (
+        <span className="text-nowrap text-success">+{text}</span>
+      ) : (
+        <span className="text-nowrap text-danger">{text}</span>
+      ),
+  },
+  {
     title: "Volume",
     dataIndex: "volume",
     key: "volume",

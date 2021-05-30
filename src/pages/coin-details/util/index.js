@@ -9,6 +9,7 @@ export function updateHistoryData(ohlcData) {
         closeValue: data?.close,
         highLowDiffValue: data?.high - data?.low,
         openCloseDiffValue: data?.close - data?.open,
+        lowCloseDiffValue: data?.close - data?.low,
         volume: new Intl.NumberFormat("en-IN").format(data?.volume),
         open: new Intl.NumberFormat("en-IN", {
             style: "currency",
@@ -30,6 +31,10 @@ export function updateHistoryData(ohlcData) {
             style: "currency",
             currency: "INR",
         }).format(data?.close - data?.open),
+        lowCloseDiff: new Intl.NumberFormat("en-IN", {
+            style: "currency",
+            currency: "INR",
+        }).format(data?.close - data?.low),
         highLowDiff: new Intl.NumberFormat("en-IN", {
             style: "currency",
             currency: "INR",

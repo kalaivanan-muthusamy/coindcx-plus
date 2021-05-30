@@ -15,7 +15,6 @@ const initialState = {
 };
 
 export function reducer(state = initialState, action) {
-    console.log({ action })
     switch (action.type) {
         case 'MARKET_DETAILS_REQUEST':
             return { ...state, marketDetailsLoading: true };

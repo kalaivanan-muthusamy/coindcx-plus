@@ -1,46 +1,32 @@
-import { Layout } from "antd";
-import { useEffect } from "react";
+import { Card, Layout, Spin } from "antd";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import AppHeader from "./components/header";
 import Sidebar from "./components/sidebar";
-import io from "socket.io-client";
+import axios from "axios";
 
 const { Content, Footer } = Layout;
-const socketEndpoint =
-  process.env.NODE_ENV === "development"
-    ? "ws://stream.coindcx.com"
-    : "wss://stream.coindcx.com";
-const socket = io(socketEndpoint, {
-  transports: ["websocket"],
-});
 
 function Main(props) {
+  const [loading, setIsLoading] = useState(false);
+
   useEffect(() => {
     props.getAllCoinDetails();
-    subscribeUpdatePrices();
-    return () => {
-      unSubscribeUpdatePrices();
-    };
+    getCoinPrices();
   }, []);
 
-  function subscribeUpdatePrices() {
-    const channelName = "24_hour_price_changes";
-    //Join Channel
-    socket.emit("join", {
-      channelName: channelName,
-    });
-
-    //Listen update on channelName
-    socket.on("update-prices", (response) => {
-      const updatedPrices = JSON.parse(response.data);
-      console.log({ updatedPrices });
-    });
-  }
-
-  function unSubscribeUpdatePrices() {
-    socket.emit("leave", {
-      channelName: "24_hour_price_changes",
-    });
+  async function getCoinPrices() {
+    try {
+      setIsLoading(true);
+      const { data: coinsCurrentPrice } = await axios.get(
+        `https://public.coindcx.com/market_data/current_prices`
+      );
+      props?.setCoinsCurrentPrice(coinsCurrentPrice);
+      setIsLoading(false);
+    } catch (err) {
+      setIsLoading(false);
+      console.error(err);
+    }
   }
 
   return (
@@ -49,9 +35,17 @@ function Main(props) {
       <Layout className="gx-app-layout">
         <AppHeader />
         <Content className="gx-layout-content gx-container-wrap">
-          <div className="gx-main-content-wrapper">{props.children}</div>
+          <div className="gx-main-content-wrapper">
+            {props?.marketDetails?.length > 0 && !loading ? (
+              <>{props.children}</>
+            ) : (
+              <Card className="gx-card text-center">
+                <Spin />
+              </Card>
+            )}
+          </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>Created by Kalaivanan</Footer>
+        <Footer style={{ textAlign: "center" }}>Created by Kalaivanan</Footer>{" "}
       </Layout>
     </div>
   );
@@ -68,6 +62,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getAllCoinDetails: () => dispatch({ type: "MARKET_DETAILS_REQUEST" }),
+    setCoinsCurrentPrice: (coinsCurrentPrice) =>
+      dispatch({
+        type: "SET_COINS_CURRENT_PRICE",
+        payload: { coinsCurrentPrice },
+      }),
   };
 };
 

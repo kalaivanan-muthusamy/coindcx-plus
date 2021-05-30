@@ -6,6 +6,7 @@ const initialState = {
     allCoins: [],
     selectedCoin: null,
     marketDetailsLoading: false,
+    coinsCurrentPrice: {},
     uiSettings: {
         navCollapsed: true,
         navStyle: NAV_STYLE_BELOW_HEADER,
@@ -38,6 +39,11 @@ export function reducer(state = initialState, action) {
                     screenWidth: action.payload.screenWidth
                 }
             };
+        case 'SET_COINS_CURRENT_PRICE':
+            return {
+                ...state,
+                coinsCurrentPrice: action.payload.coinsCurrentPrice
+            }
         default:
             return state;
     }

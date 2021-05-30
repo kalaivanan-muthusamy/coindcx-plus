@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Card, Col, Row, Table, Tooltip } from "antd";
+import { Card, Col, Row, Tooltip } from "antd";
 import moment from "moment";
 import LineIndicator from "./../../components/line-indicator";
+import { ArrowUpOutlined } from "@ant-design/icons";
 
 const FlipSideCryptoAPIKey = "e5c05c00-3cd0-4896-a2f7-e9e7821a5e36";
 
@@ -87,7 +88,19 @@ function Ratings({ coinDetails }) {
     <Row>
       {flipSideScores && (
         <Col xl={12} lg={12} md={24} sm={24} xs={24}>
-          <Card className="gx-card" title="Flipside Crypto Analysis">
+          <Card
+            extra={
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href="https://app.flipsidecrypto.com/tracker/all-coins"
+              >
+                <ArrowUpOutlined className="icon-external" />
+              </a>
+            }
+            className="gx-card"
+            title="Flipside Crypto Analysis"
+          >
             <div className="gx-table-responsive">
               <ul className="gx-line-indicator gx-fs-sm gx-pb-1 gx-pb-sm-0">
                 <li>

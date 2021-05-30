@@ -6,10 +6,14 @@ import Sidebar from "./components/sidebar";
 import io from "socket.io-client";
 
 const { Content, Footer } = Layout;
-const socketEndpoint = "ws://stream.coindcx.com";
+const socketEndpoint =
+  process.env.NODE_ENV === "development"
+    ? "ws://stream.coindcx.com"
+    : "wss://stream.coindcx.com";
 const socket = io(socketEndpoint, {
-  transports: ['websocket']
+  transports: ["websocket"],
 });
+
 function Main(props) {
   useEffect(() => {
     props.getAllCoinDetails();

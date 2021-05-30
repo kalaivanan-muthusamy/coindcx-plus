@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Card, Col, Row, Table } from "antd";
+import { Card, Col, Row, Table, Tooltip } from "antd";
 import moment from "moment";
 import LineIndicator from "./../../components/line-indicator";
 
 const FlipSideCryptoAPIKey = "e5c05c00-3cd0-4896-a2f7-e9e7821a5e36";
 
 function Ratings({ coinDetails }) {
-  const [tradeHistory, setTradeHistory] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [fileSideAnalysis, setFileSideAnalysis] = useState(null);
+  const [flipSideScores, setFlipSideScores] = useState(null);
 
   useEffect(() => {
     getFlipSideCryptoProjects();
@@ -30,10 +28,6 @@ function Ratings({ coinDetails }) {
       const projectDetails = allProjects.find(
         (data) => data?.symbol === coinDetails?.target_currency_short_name
       );
-      setFileSideAnalysis({
-        ...fileSideAnalysis,
-        projectDetails,
-      });
       if (projectDetails) getFlipSideCryptoAnalysis(projectDetails?.id);
     } catch (err) {
       console.error(err);
@@ -64,25 +58,26 @@ function Ratings({ coinDetails }) {
       const projectScores = {
         fcas: metrics
           .find((metric) => metric.slug === "fcas")
-          ?.timeseries?.slice()
+          ?.timeseries?.filter((a) => a.value !== null)
+          .slice()
           ?.reverse()?.[0]?.value,
         dev: metrics
           .find((metric) => metric.slug === "dev")
-          ?.timeseries?.slice()
+          ?.timeseries?.filter((a) => a.value !== null)
+          .slice()
           ?.reverse()?.[0]?.value,
         "market-maturity": metrics
           .find((metric) => metric.slug === "market-maturity")
-          ?.timeseries?.slice()
+          ?.timeseries?.filter((a) => a.value !== null)
+          .slice()
           ?.reverse()?.[0]?.value,
         utility: metrics
           .find((metric) => metric.slug === "utility")
-          ?.timeseries?.slice()
+          ?.timeseries?.filter((a) => a.value !== null)
+          .slice()
           ?.reverse()?.[0]?.value,
       };
-      setFileSideAnalysis({
-        ...fileSideAnalysis,
-        projectScores,
-      });
+      setFlipSideScores(projectScores);
     } catch (err) {
       console.error(err);
     }
@@ -90,47 +85,81 @@ function Ratings({ coinDetails }) {
 
   return (
     <Row>
-      {fileSideAnalysis?.projectDetails && (
+      {flipSideScores && (
         <Col xl={12} lg={12} md={24} sm={24} xs={24}>
-          <Card className="gx-card" title="Flip Side Crypto Analysis">
+          <Card className="gx-card" title="Flipside Crypto Analysis">
             <div className="gx-table-responsive">
               <ul className="gx-line-indicator gx-fs-sm gx-pb-1 gx-pb-sm-0">
                 <li>
                   <LineIndicator
-                    width={(fileSideAnalysis?.projectScores?.fcas / 1000) * 100}
-                    title="FCAS"
+                    width={(flipSideScores?.fcas / 1000) * 100}
+                    title={
+                      <div className="d-flex">
+                        <span>FCAS </span>
+                        <Tooltip
+                          className="text-muted ms-1 pt-1"
+                          title="A proprietary rating derived from the activity of developers, on chain behaviors and market activity."
+                        >
+                          <i className="icon icon-sweet-alert" />
+                        </Tooltip>
+                      </div>
+                    }
                     color="primary"
-                    value={fileSideAnalysis?.projectScores?.fcas}
+                    value={flipSideScores?.fcas}
                   />
                 </li>
                 <li>
                   <LineIndicator
-                    width={(fileSideAnalysis?.projectScores?.dev / 1000) * 100}
-                    title="Developer Score"
+                    width={(flipSideScores?.dev / 1000) * 100}
+                    title={
+                      <div className="d-flex">
+                        <span>Developer Score </span>
+                        <Tooltip
+                          className="text-muted ms-1 pt-1"
+                          title="A daily composite score representing the amount and type of work being done on a product. This score tracks activity across three major categories: changes to the codebase, major releases and updates, and community involvement."
+                        >
+                          <i className="icon icon-sweet-alert" />
+                        </Tooltip>
+                      </div>
+                    }
                     color="pink"
-                    value={fileSideAnalysis?.projectScores?.dev}
+                    value={flipSideScores?.dev}
                   />
                 </li>
                 <li>
                   <LineIndicator
-                    width={
-                      (fileSideAnalysis?.projectScores?.["market-maturity"] /
-                        1000) *
-                      100
+                    width={(flipSideScores?.["market-maturity"] / 1000) * 100}
+                    title={
+                      <div className="d-flex">
+                        <span>Market Maturity Score </span>
+                        <Tooltip
+                          className="text-muted ms-1 pt-1"
+                          title="Market Maturity, derived from Risk and Money Supply factors, represents the likelihood a crypto asset will provide consistent returns across various market scenarios by combining assessments of market risk (specifically, exchange liquidity, price projections, price cliff potential, algorithmic prediction consistency, and price volatility), as well as an analysis of the stability of the Money Supply of each tracked project. The less stable the Money Supply, and the more controlled it is by a few addresses, the worse the Money Supply score."
+                        >
+                          <i className="icon icon-sweet-alert" />
+                        </Tooltip>
+                      </div>
                     }
-                    title="Market Maturity Score"
                     color="orange"
-                    value={fileSideAnalysis?.projectScores?.["market-maturity"]}
+                    value={flipSideScores?.["market-maturity"]}
                   />
                 </li>
                 <li>
                   <LineIndicator
-                    width={
-                      (fileSideAnalysis?.projectScores?.utility / 1000) * 100
+                    width={(flipSideScores?.utility / 1000) * 100}
+                    title={
+                      <div className="d-flex">
+                        <span>Utility Score </span>
+                        <Tooltip
+                          className="text-muted ms-1 pt-1"
+                          title="A distilled representation of non-exchange related economic activity. Computed daily."
+                        >
+                          <i className="icon icon-sweet-alert" />
+                        </Tooltip>
+                      </div>
                     }
-                    title="Utility Score"
                     color="green"
-                    value={fileSideAnalysis?.projectScores?.utility}
+                    value={flipSideScores?.utility}
                   />
                 </li>
               </ul>

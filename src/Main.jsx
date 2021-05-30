@@ -8,14 +8,14 @@ import io from "socket.io-client";
 const { Content, Footer } = Layout;
 const socketEndpoint = "ws://stream.coindcx.com";
 const socket = io(socketEndpoint, {
-  transports: ["websocket"],
+  transports: ['websocket']
 });
-
 function Main(props) {
   useEffect(() => {
     props.getAllCoinDetails();
+    subscribeUpdatePrices();
     return () => {
-      // leave a channel
+      unSubscribeUpdatePrices();
     };
   }, []);
 
@@ -30,6 +30,12 @@ function Main(props) {
     socket.on("update-prices", (response) => {
       const updatedPrices = JSON.parse(response.data);
       console.log({ updatedPrices });
+    });
+  }
+
+  function unSubscribeUpdatePrices() {
+    socket.emit("leave", {
+      channelName: "24_hour_price_changes",
     });
   }
 

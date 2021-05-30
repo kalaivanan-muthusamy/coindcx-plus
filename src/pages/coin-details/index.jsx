@@ -15,7 +15,7 @@ import OrderBook from "./order-books";
 import TradeHistory from "./trade-history";
 import "../../styles/pages/index.scss";
 import TradeChart from "./trade-chart";
-import Ratings from './ratings';
+import Ratings from "./ratings";
 
 const { TabPane } = Tabs;
 // const socket = io("ws://stream.coindcx.com", { transports: ["websocket"] });
@@ -44,20 +44,6 @@ function CoinDetails(props) {
 
   useEffect(() => {
     props?.setSelectedCoin(coinSymbol);
-
-    // socket.emit("join", {
-    //   channelName: `I-${coinSymbol}_INR`,
-    // });
-
-    // socket.on("new-trade", (response) => {
-    //   console.log(response.data);
-    // });
-
-    // return () => {
-    //   socket.emit("leave", {
-    //     channelName: `I-${coinSymbol}_INR`,
-    //   });
-    // };
   }, []);
 
   async function getCurrentPrice() {
@@ -125,7 +111,7 @@ function CoinDetails(props) {
                           )
                         </span>
                       </Title>
-                      <h2 class="gx-fs-xxxl gx-font-weight-medium">
+                      <h2 className="gx-fs-xxxl gx-font-weight-medium">
                         {coinDetails?.price}
                         <span
                           className={`h4 ms-2 gx-chart-${

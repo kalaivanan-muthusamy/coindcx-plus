@@ -96,7 +96,6 @@ function HistoricalData({ coinId }) {
         };
       }
     });
-    console.log({ groupedData });
 
     return Object.keys(groupedData).map((date, ind) => {
       const data = groupedData[date];

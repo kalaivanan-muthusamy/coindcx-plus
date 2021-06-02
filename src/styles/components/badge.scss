@@ -1,0 +1,33 @@
+.price-change {
+  position: relative;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 1.75rem;
+
+  .price-value {
+    z-index: 2;
+  }
+
+  .price-plus {
+    height: 1.75rem;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    background-color: #237804;
+  }
+
+  .price-minus {
+    height: 1.75rem;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    background-color: #cf1322;
+  }
+}

@@ -1,15 +1,13 @@
 import Title from "antd/lib/typography/Title";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Col, Row, Spin, Tabs } from "antd";
+import { useHistory, useParams } from "react-router-dom";
+import { Col, Row, Spin, Table, Tabs } from "antd";
 import {
   UpCircleFilled,
   DownCircleFilled,
   SnippetsFilled,
 } from "@ant-design/icons";
 import { connect } from "react-redux";
-import io from "socket.io-client";
-import axios from "axios";
 import HistoricalDataCoinDCX from "./historical-data-coin-dcx";
 import OrderBook from "./order-books";
 import TradeHistory from "./trade-history";
@@ -17,87 +15,107 @@ import "../../styles/pages/index.scss";
 import TradeChart from "./trade-chart";
 import Ratings from "./ratings";
 
+const coinsColumns = [
+  {
+    title: "Coin",
+    dataIndex: "coin",
+    key: "coin",
+    render: (text, record) => {
+      return (
+        <div className="coin-info">
+          <span className="coin-name">{text}</span>
+          <span className={`coin-price`}>{record.price}</span>
+        </div>
+      );
+    },
+  },
+  {
+    title: "Change",
+    dataIndex: "change",
+    key: "change",
+    align: "right",
+    sorter: (a, b) => a.change - b.change,
+    render: (text, record) => {
+      return (
+        <div className="price-change">
+          <div className="price-value">
+            {parseFloat(record.change).toFixed(2)}
+          </div>
+          <div className={record.change > 0 ? "price-plus" : "price-minus"} />
+        </div>
+      );
+    },
+  },
+];
+
 const { TabPane } = Tabs;
-// const socket = io("ws://stream.coindcx.com", { transports: ["websocket"] });
 
 function CoinDetails(props) {
-  const [coinDetails, setCoinDetails] = useState({});
   const { coinSymbol } = useParams();
   const selectedCoin = props.selectedCoin;
   const selectedCoinDetails = props?.marketDetails?.find(
-    (a) => a.target_currency_short_name === selectedCoin
+    (a) => a.coindcx_name === selectedCoin
   );
+  const coinDetails = props?.coinsPriceChanges?.[selectedCoin];
+
+  const history = useHistory();
 
   useEffect(() => {
-    getInitialDetails();
+    const coinName = coinSymbol.toUpperCase();
+    const marketInfo = props?.marketDetails?.find(
+      (a) => a.coindcx_name === coinName
+    );
+    if (!marketInfo) return history.push("/coins");
+    props?.setSelectedCoin(coinSymbol.toUpperCase(), marketInfo.pair);
   }, [coinSymbol]);
 
-  async function getInitialDetails() {
-    const priceDetailsAsync = getCurrentPrice();
-    const priceChangesAsync = getPriceChanges();
-    await Promise.all([priceDetailsAsync, priceChangesAsync]);
-    setCoinDetails({
-      ...(await priceDetailsAsync),
-      ...(await priceChangesAsync),
-    });
-  }
-
-  useEffect(() => {
-    props?.setSelectedCoin(coinSymbol);
-  }, []);
-
-  async function getCurrentPrice() {
-    try {
-      const { data: currentPrices } = await axios.get(
-        "https://public.coindcx.com/market_data/current_prices"
-      );
-      const coinPrice = Object.entries(currentPrices)?.find(
-        (price) => price?.[0] === `${coinSymbol}INR`
-      )?.[1];
-      return {
-        price: new Intl.NumberFormat("en-IN", {
-          style: "currency",
-          currency: "INR",
-        }).format(coinPrice),
-      };
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  async function getPriceChanges() {
-    try {
-      const { data: priceChanges } = await axios.get(
-        "https://public.coindcx.com/market_data/price_changes"
-      );
-      return {
-        high: new Intl.NumberFormat("en-IN", {
-          style: "currency",
-          currency: "INR",
-        }).format(priceChanges[`${coinSymbol}INR_high`]),
-        low: new Intl.NumberFormat("en-IN", {
-          style: "currency",
-          currency: "INR",
-        }).format(priceChanges[`${coinSymbol}INR_low`]),
-        percent_change: new Intl.NumberFormat("en-IN").format(
-          priceChanges[`${coinSymbol}INR_percent_change`]
-        ),
-        vol: new Intl.NumberFormat("en-IN").format(
-          priceChanges[`${coinSymbol}INR_vol`]
-        ),
-      };
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
   function onTabChange() {}
+
+  function getCoinsData() {
+    return props?.marketDetails?.map((market) => ({
+      coinDCXName: market?.coindcx_name,
+      coin: market?.target_currency_name,
+      price: new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: market?.base_currency_short_name,
+      }).format(props?.coinsCurrentPrice?.[market?.coindcx_name]),
+      change:
+        props?.coinsPriceChanges?.[market?.coindcx_name]?.percentageChangeValue,
+    }));
+  }
+
+  function updateCoin(record) {
+    history.push(`/coins/${record?.coinDCXName}`);
+  }
 
   return (
     <div className="coin-details">
       {selectedCoinDetails ? (
         <Row>
-          <Col xs={24}>
+          <Col xs={0} sm={0} md={6} lg={6} xl={6}>
+            <div className="gx-card">
+              <div className="gx-card-body ps-3 pe-0">
+                <div className="coin-list">
+                  <Table
+                    onRow={(record, rowIndex) => {
+                      return {
+                        onClick: (event) => {
+                          updateCoin(record);
+                        },
+                      };
+                    }}
+                    className=""
+                    scroll={{ x: "100%" }}
+                    size="small"
+                    pagination={false}
+                    dataSource={getCoinsData()}
+                    columns={coinsColumns}
+                  />
+                </div>
+              </div>
+            </div>
+          </Col>
+          <Col xs={24} sm={24} md={18} lg={18} xl={18}>
             <div className="gx-card">
               <div className="gx-card-body">
                 <Row>
@@ -112,13 +130,13 @@ function CoinDetails(props) {
                         </span>
                       </Title>
                       <h2 className="gx-fs-xxxl gx-font-weight-medium">
-                        {coinDetails?.price}
+                        {props?.coinsCurrentPrice?.[coinSymbol]}
                         <span
                           className={`h4 ms-2 gx-chart-${
-                            coinDetails?.percent_change > 0 ? "up" : "down"
+                            coinDetails?.percent > 0 ? "up" : "down"
                           }`}
                         >
-                          {coinDetails?.percent_change}%{" "}
+                          {coinDetails?.percent}%{" "}
                           <i className="icon icon-menu-up gx-fs-sm" />
                         </span>
                       </h2>
@@ -151,8 +169,6 @@ function CoinDetails(props) {
                 </Row>
               </div>
             </div>
-          </Col>
-          <Col xs={24}>
             <Tabs defaultActiveKey="1" onChange={onTabChange}>
               <TabPane tab="Historical Data" key="1">
                 <HistoricalDataCoinDCX coinDetails={selectedCoinDetails} />
@@ -168,6 +184,7 @@ function CoinDetails(props) {
               </TabPane>
             </Tabs>
           </Col>
+          <Col xs={18}></Col>
         </Row>
       ) : (
         <div className="text-center">
@@ -183,13 +200,18 @@ const mapStateToProps = (state) => {
     allCoins: state.allCoins,
     marketDetails: state.marketDetails,
     selectedCoin: state.selectedCoin,
+    coinsCurrentPrice: state.coinsCurrentPrice,
+    coinsPriceChanges: state.coinsPriceChanges,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setSelectedCoin: (coinSymbol) =>
-      dispatch({ type: "SET_SELECTED_COIN", payload: { coinSymbol } }),
+    setSelectedCoin: (coinSymbol, coinPair) =>
+      dispatch({
+        type: "SET_SELECTED_COIN",
+        payload: { coinSymbol, coinPair },
+      }),
   };
 };
 

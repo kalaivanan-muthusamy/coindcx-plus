@@ -78,7 +78,7 @@ export const coinsColumns = [
     title: "Symbol",
     dataIndex: "symbol",
     key: "symbol",
-    render: (text) => <Link to={`/coins/${text}`}>{text}</Link>,
+    render: (text, record) => <Link to={`/coins/${record?.coinDCXName}`}>{text}</Link>,
     ...getColumnSearchProps("symbol"),
   },
   {
@@ -101,14 +101,14 @@ export const coinsColumns = [
   },
   {
     title: "24H Change",
-    dataIndex: "percent",
-    key: "percent",
-    sorter: (a, b) => a.percent - b.percent,
+    dataIndex: "percentageChangeValue",
+    key: "percentageChangeValue",
+    sorter: (a, b) => a.percentageChangeValue - b.percentageChangeValue,
     render: (text, record) =>
-      record?.percent > 0 ? (
-        <span className="text-nowrap text-success">+{text}%</span>
+      record?.percentageChangeValue > 0 ? (
+        <span className="color-animation text-nowrap text-success">+{text}%</span>
       ) : (
-        <span className="text-nowrap text-danger">{text}%</span>
+        <span className="color-animation text-nowrap text-danger">{text}%</span>
       ),
   },
 ];

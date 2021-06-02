@@ -1,0 +1,28 @@
+.coin-list {
+  max-height: 500px;
+  overflow: auto;
+
+  .ant-table {
+    .ant-table-tbody .ant-table-row {
+      cursor: pointer;
+    }
+  }
+
+  .coin-info {
+    display: flex;
+    flex-direction: column;
+
+    .coin-name {
+      font-size: 16px;
+      padding-bottom: 5px;
+    }
+
+    .coin-price {
+      font-size: 12px;
+    }
+  }
+
+  .price-change {
+    text-align: right;
+  }
+}

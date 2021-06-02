@@ -11,7 +11,7 @@ function* fetchMarketDetails() {
         const allCoins = marketDetails
             .map((a) => ({
                 label: `${a?.target_currency_name} (${a?.target_currency_short_name})`,
-                value: a?.target_currency_short_name,
+                value: a?.coindcx_name,
             }));
         yield put({ type: "MARKET_DETAILS_FETCH_SUCCESS", marketDetails, allCoins });
     } catch (e) {
@@ -20,7 +20,7 @@ function* fetchMarketDetails() {
 }
 
 function* setSelectedCoin({ payload }) {
-    yield put({ type: "SET_SELECTED_COINN", coinSymbol: payload.coinSymbol, coinPair: `I-${payload?.coinSymbol}_INR` });
+    yield put({ type: "SET_SELECTED_COINN", coinSymbol: payload.coinSymbol, coinPair: payload?.coinPair });
 }
 
 function* allSagas() {

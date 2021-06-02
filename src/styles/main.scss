@@ -1,7 +1,43 @@
+@import "components/coin-list.scss";
+@import "components/badge.scss";
+
+.ant-layout.gx-app-layout {
+  display: block;
+}
+
 .ant-layout-content {
   background-color: #f7f7f7;
 }
 
 .icon-external {
   transform: rotate(45deg);
+}
+
+.color-animation {
+  animation-name: color-key-frame;
+  animation-duration: 10s;
+}
+
+@keyframes color-key-frame {
+  from {
+    color: black;
+  }
+  to {
+    color: red;
+  }
+}
+
+// CUSTOM SCROLLBAR
+
+::-webkit-scrollbar {
+  width: 20px;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
 }

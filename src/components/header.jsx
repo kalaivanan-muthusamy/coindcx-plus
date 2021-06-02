@@ -12,8 +12,12 @@ function AppHeader(props) {
   const history = useHistory();
 
   function onCoinSelect(val) {
-    props?.setSelectedCoin(val);
-    history.push(`/coins/${val}`);
+    console.log({ val})
+    const marketInfo = props?.marketDetails?.find(
+      (a) => a.coindcx_name === val
+    );
+    props?.setSelectedCoin(val, marketInfo?.pair);
+    history.push(`/coins/${marketInfo?.coindcx_name}`);
   }
 
   function onSearch(searchText) {
@@ -36,7 +40,9 @@ function AppHeader(props) {
               <i
                 className="gx-icon-btn icon icon-menu"
                 onClick={() => {
-                  props?.toggleCollapsedSideNav(!props?.uiSettings?.navCollapsed);
+                  props?.toggleCollapsedSideNav(
+                    !props?.uiSettings?.navCollapsed
+                  );
                 }}
               />
             </div>
@@ -110,6 +116,7 @@ const mapStateToProps = (state) => {
   return {
     allCoins: state.allCoins,
     uiSettings: state.uiSettings,
+    marketDetails: state.marketDetails,
   };
 };
 
@@ -117,8 +124,11 @@ const mapDispatchToProps = (dispatch) => {
   return {
     toggleCollapsedSideNav: (navCollapsed) =>
       dispatch({ type: "TOGGLE_COLLAPSED_NAV", payload: { navCollapsed } }),
-    setSelectedCoin: (coinSymbol) =>
-      dispatch({ type: "SET_SELECTED_COIN", payload: { coinSymbol } }),
+    setSelectedCoin: (coinSymbol, coinPair) =>
+      dispatch({
+        type: "SET_SELECTED_COIN",
+        payload: { coinSymbol, coinPair },
+      }),
   };
 };
 

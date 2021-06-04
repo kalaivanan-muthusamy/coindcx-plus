@@ -35,7 +35,7 @@ function HistoryCandleChart({ coinDetails }) {
 
   useEffect(() => {
     getHistoricalData();
-  }, []);
+  }, [coinDetails]);
 
   async function getHistoricalData() {
     try {
@@ -44,13 +44,12 @@ function HistoryCandleChart({ coinDetails }) {
         {
           params: {
             pair: `${coinDetails?.pair}`,
-            startTime: moment().add(-365, "d").format("x"),
+            startTime: moment().add(-31, "d").format("x"),
             endTime: moment().format("x"),
             interval: "1d",
           },
         }
       );
-      console.log({ ohlcData });
       setHistoricalData(getCandleData(updateHistoryData(ohlcData)));
     } catch (err) {
       console.error(err);

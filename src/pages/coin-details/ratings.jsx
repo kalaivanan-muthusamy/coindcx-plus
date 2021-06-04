@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Card, Col, Row, Tooltip } from "antd";
+import { Card, Col, Row, Spin, Tooltip } from "antd";
 import moment from "moment";
 import LineIndicator from "./../../components/line-indicator";
 import { ArrowUpOutlined } from "@ant-design/icons";
@@ -9,12 +9,16 @@ const FlipSideCryptoAPIKey = "e5c05c00-3cd0-4896-a2f7-e9e7821a5e36";
 
 function Ratings({ coinDetails }) {
   const [flipSideScores, setFlipSideScores] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getFlipSideCryptoProjects();
+    
   }, [coinDetails]);
-
+  
   async function getFlipSideCryptoProjects() {
+    setFlipSideScores(null);
+    setLoading(true);
     try {
       const {
         data: { data: allProjects },
@@ -29,10 +33,11 @@ function Ratings({ coinDetails }) {
       const projectDetails = allProjects.find(
         (data) => data?.symbol === coinDetails?.target_currency_short_name
       );
-      if (projectDetails) getFlipSideCryptoAnalysis(projectDetails?.id);
+      if (projectDetails) await getFlipSideCryptoAnalysis(projectDetails?.id);
     } catch (err) {
       console.error(err);
     }
+    setLoading(false);
   }
 
   async function getFlipSideCryptoAnalysis(projectId) {
@@ -86,21 +91,21 @@ function Ratings({ coinDetails }) {
 
   return (
     <Row>
-      {flipSideScores && (
-        <Col xl={12} lg={12} md={24} sm={24} xs={24}>
-          <Card
-            extra={
-              <a
-                target="_blank"
-                rel="noreferrer"
-                href="https://app.flipsidecrypto.com/tracker/all-coins"
-              >
-                <ArrowUpOutlined className="icon-external" />
-              </a>
-            }
-            className="gx-card"
-            title="Flipside Crypto Analysis"
-          >
+      <Col xl={12} lg={12} md={24} sm={24} xs={24}>
+        <Card
+          extra={
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href="https://app.flipsidecrypto.com/tracker/all-coins"
+            >
+              <ArrowUpOutlined className="icon-external" />
+            </a>
+          }
+          className="gx-card"
+          title="Flipside Crypto Analysis"
+        >
+          {flipSideScores && (
             <div className="gx-table-responsive">
               <ul className="gx-line-indicator gx-fs-sm gx-pb-1 gx-pb-sm-0">
                 <li>
@@ -177,9 +182,19 @@ function Ratings({ coinDetails }) {
                 </li>
               </ul>
             </div>
-          </Card>
-        </Col>
-      )}
+          )}
+          {!loading && !flipSideScores && (
+            <div className="mh-150 h-100 d-flex justify-content-center align-items-center">
+              No Data is Available
+            </div>
+          )}
+          {loading && (
+            <div className="mh-150 h-100 d-flex justify-content-center align-items-center">
+              <Spin />
+            </div>
+          )}
+        </Card>
+      </Col>
     </Row>
   );
 }

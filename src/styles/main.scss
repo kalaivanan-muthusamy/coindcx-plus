@@ -1,5 +1,6 @@
 @import "components/coin-list.scss";
 @import "components/badge.scss";
+@import "utility.scss";
 
 .ant-layout.gx-app-layout {
   display: block;
@@ -41,3 +42,5 @@
   border: 6px solid transparent;
   background-clip: content-box;
 }
+
+

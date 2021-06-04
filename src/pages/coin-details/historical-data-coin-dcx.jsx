@@ -119,8 +119,8 @@ function HistoricalDataCoinDCX({ coinDetails }) {
   ];
 
   useEffect(() => {
-    loadInitial();
-    return () => {
+    loadInitial(); 
+    return () => { // unmount needed when coinDetails is changed
       intervalIds?.map((id) => clearInterval(id));
     };
   }, [coinDetails, dataInterval, startTime, endTime]);
@@ -174,7 +174,7 @@ function HistoricalDataCoinDCX({ coinDetails }) {
           onChange={onIntervalChange}
         >
           {intervalsList?.map((a) => (
-            <Option value={a}>{a}</Option>
+            <Option key={a} value={a}>{a}</Option>
           ))}
         </Select>
         <RangePicker

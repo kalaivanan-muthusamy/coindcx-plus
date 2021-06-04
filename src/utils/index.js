@@ -30,6 +30,7 @@ export function massagePriceChangesData(allCoinsPrices, marketDetails, coinsCurr
                 priceValue: coinsCurrentPrice?.[metric?.coinName],
                 highValue: metric?.high,
                 lowValue: metric?.low,
+                volume: new Intl.NumberFormat('en-IN').format(metric?.vol),
                 percentageChangeValue: metric?.percent,
                 price: new Intl.NumberFormat("en-IN", {
                     style: "currency",

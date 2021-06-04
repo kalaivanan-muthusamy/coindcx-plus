@@ -8,12 +8,16 @@ import {
   SnippetsFilled,
 } from "@ant-design/icons";
 import { connect } from "react-redux";
+import { Input } from "antd";
+
 import HistoricalDataCoinDCX from "./historical-data-coin-dcx";
 import OrderBook from "./order-books";
 import TradeHistory from "./trade-history";
 import "../../styles/pages/index.scss";
-import TradeChart from "./trade-chart";
 import Ratings from "./ratings";
+import HistoryCandleChart from "./history-candle-chart";
+
+const { Search } = Input;
 
 const coinsColumns = [
   {
@@ -39,7 +43,7 @@ const coinsColumns = [
       return (
         <div className="price-change">
           <div className="price-value">
-            {parseFloat(record.change).toFixed(2)}
+            {parseFloat(record.change).toFixed(2)}%
           </div>
           <div className={record.change > 0 ? "price-plus" : "price-minus"} />
         </div>
@@ -57,8 +61,9 @@ function CoinDetails(props) {
     (a) => a.coindcx_name === selectedCoin
   );
   const coinDetails = props?.coinsPriceChanges?.[selectedCoin];
-
   const history = useHistory();
+  const [marketStatus, setMarketStatus] = useState([]);
+  const [searchText, setSearchText] = useState(null);
 
   useEffect(() => {
     const coinName = coinSymbol.toUpperCase();
@@ -69,10 +74,23 @@ function CoinDetails(props) {
     props?.setSelectedCoin(coinSymbol.toUpperCase(), marketInfo.pair);
   }, [coinSymbol]);
 
+  useEffect(() => {
+    updateCoinsData(searchText);
+  }, [props?.marketDetails, props?.coinsCurrentPrice]);
+
   function onTabChange() {}
 
-  function getCoinsData() {
-    return props?.marketDetails?.map((market) => ({
+  function updateCoinsData(searchText) {
+    let marketDetails = props?.marketDetails;
+    if (searchText) {
+      marketDetails = marketDetails?.filter((coinInfo) => {
+        return (
+          coinInfo?.coindcx_name.includes(searchText) ||
+          coinInfo?.target_currency_name.includes(searchText)
+        );
+      });
+    }
+    const marketStatus = marketDetails.map((market) => ({
       coinDCXName: market?.coindcx_name,
       coin: market?.target_currency_name,
       price: new Intl.NumberFormat("en-IN", {
@@ -82,10 +100,19 @@ function CoinDetails(props) {
       change:
         props?.coinsPriceChanges?.[market?.coindcx_name]?.percentageChangeValue,
     }));
+    setMarketStatus(marketStatus);
   }
 
   function updateCoin(record) {
+    setSearchText(null);
+    updateCoinsData(null);
     history.push(`/coins/${record?.coinDCXName}`);
+  }
+
+  function onSearch(event) {
+    const val = event.target.value;
+    setSearchText(val);
+    updateCoinsData(val);
   }
 
   return (
@@ -95,6 +122,12 @@ function CoinDetails(props) {
           <Col xs={0} sm={0} md={6} lg={6} xl={6}>
             <div className="gx-card">
               <div className="gx-card-body ps-3 pe-0">
+                <Search
+                  className="pe-3"
+                  value={searchText}
+                  placeholder="Search Coin"
+                  onChange={onSearch}
+                />
                 <div className="coin-list">
                   <Table
                     onRow={(record, rowIndex) => {
@@ -108,7 +141,7 @@ function CoinDetails(props) {
                     scroll={{ x: "100%" }}
                     size="small"
                     pagination={false}
-                    dataSource={getCoinsData()}
+                    dataSource={marketStatus}
                     columns={coinsColumns}
                   />
                 </div>
@@ -130,13 +163,18 @@ function CoinDetails(props) {
                         </span>
                       </Title>
                       <h2 className="gx-fs-xxxl gx-font-weight-medium">
-                        {props?.coinsCurrentPrice?.[coinSymbol]}
+                        {new Intl.NumberFormat("en-IN", {
+                          style: "currency",
+                          currency: "INR",
+                        }).format(props?.coinsCurrentPrice?.[coinSymbol])}
                         <span
                           className={`h4 ms-2 gx-chart-${
-                            coinDetails?.percent > 0 ? "up" : "down"
+                            coinDetails?.percentageChangeValue > 0
+                              ? "up"
+                              : "down"
                           }`}
                         >
-                          {coinDetails?.percent}%{" "}
+                          {coinDetails?.percentageChangeValue}%{" "}
                           <i className="icon icon-menu-up gx-fs-sm" />
                         </span>
                       </h2>
@@ -156,15 +194,14 @@ function CoinDetails(props) {
                         <li>
                           <SnippetsFilled />
                           <span className="gx-text-grey">
-                            24H Volume: <span>{coinDetails?.vol}</span>
+                            24H Volume: <span>{coinDetails?.volume}</span>
                           </span>
                         </li>
                       </ul>
                     </div>
                   </Col>
-
                   <Col xl={16} lg={12} md={12} sm={12} xs={24}>
-                    <TradeChart />
+                    <HistoryCandleChart coinDetails={selectedCoinDetails} />
                   </Col>
                 </Row>
               </div>

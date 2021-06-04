@@ -1,8 +1,11 @@
+import moment from 'moment';
 
 export function updateHistoryData(ohlcData) {
     return ohlcData?.map((data, ind) => ({
         sno: ind + 1,
+        time: data?.time,
         date: new Intl.DateTimeFormat("en-IN").format(data?.time),
+        formattedDate: moment(data?.time).format('YYYY-MM-DD'),
         openValue: data?.open,
         highValue: data?.high,
         lowValue: data?.low,

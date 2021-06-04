@@ -152,7 +152,7 @@ function CoinDetails(props) {
             <div className="gx-card">
               <div className="gx-card-body">
                 <Row>
-                  <Col xl={8} lg={12} md={12} sm={12} xs={24}>
+                  <Col xl={8} lg={12} md={12} sm={24} xs={24}>
                     <div className="gx-wel-ema gx-pt-xl-2">
                       <Title className="mb-2">
                         {selectedCoinDetails?.target_currency_name}{" "}
@@ -200,7 +200,7 @@ function CoinDetails(props) {
                       </ul>
                     </div>
                   </Col>
-                  <Col xl={16} lg={12} md={12} sm={12} xs={24}>
+                  <Col xl={16} lg={12} md={12} sm={24} xs={24}>
                     <HistoryCandleChart coinDetails={selectedCoinDetails} />
                   </Col>
                 </Row>

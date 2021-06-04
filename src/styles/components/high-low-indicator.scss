@@ -1,0 +1,28 @@
+.high-low-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  .high-indicator {
+    z-index: 2;
+    opacity: 1;
+  }
+
+  .high-indicator-bg {
+    background-color: #237804;
+  }
+
+  .low-indicator-bg {
+    background-color: #cf1322;
+  }
+
+  .high-low-indicator-bg {
+    height: 100%;
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    right: 0;
+    opacity: 0.09;
+  }
+}

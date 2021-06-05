@@ -84,9 +84,11 @@ function CoinDetails(props) {
     let marketDetails = props?.marketDetails;
     if (searchText) {
       marketDetails = marketDetails?.filter((coinInfo) => {
+        const fullName = coinInfo?.coindcx_name?.toLowerCase();
+        const symbol = coinInfo?.target_currency_name?.toLowerCase();
         return (
-          coinInfo?.coindcx_name.includes(searchText) ||
-          coinInfo?.target_currency_name.includes(searchText)
+          fullName.includes(searchText.toLowerCase()) ||
+          symbol.includes(searchText.toLowerCase())
         );
       });
     }

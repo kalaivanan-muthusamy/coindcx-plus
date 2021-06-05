@@ -4,16 +4,16 @@ import { NavLink } from "react-router-dom";
 function HorizontalMenu() {
   return (
     <Menu mode="horizontal">
-      {/* <Menu.Item key="dashboard">
-        <NavLink exact activeClassName="active" to="/coin">
-          <i className="icon icon-home" />
-          Dashboard
-        </NavLink>
-      </Menu.Item> */}
-      <Menu.Item key="coins">
+      <Menu.Item>
         <NavLink activeClassName="active" to="/coins">
-          <i className="icon icon-crypto" />
+          <i className="icon icon-badge" />
           Coins
+        </NavLink>
+      </Menu.Item>
+      <Menu.Item>
+        <NavLink activeClassName="active" to="/market-analysis">
+          <i className="icon icon-apps" />
+          Market Analysis
         </NavLink>
       </Menu.Item>
     </Menu>

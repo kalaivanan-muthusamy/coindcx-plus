@@ -16,6 +16,7 @@ import TradeHistory from "./trade-history";
 import "../../styles/pages/index.scss";
 import Ratings from "./ratings";
 import HistoryCandleChart from "./history-candle-chart";
+import ChangeIndicator from "./../../components/change-indicator";
 
 const { Search } = Input;
 
@@ -39,16 +40,7 @@ const coinsColumns = [
     key: "change",
     align: "right",
     sorter: (a, b) => a.change - b.change,
-    render: (text, record) => {
-      return (
-        <div className="price-change">
-          <div className="price-value">
-            {parseFloat(record.change).toFixed(2)}%
-          </div>
-          <div className={record.change > 0 ? "price-plus" : "price-minus"} />
-        </div>
-      );
-    },
+    render: (text, record) => <ChangeIndicator change={record?.change} />,
   },
 ];
 

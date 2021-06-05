@@ -31078,7 +31078,7 @@ h6,
 }
 .ant-menu-item .icon {
   min-width: 14px;
-  margin-right: 20px;
+  margin-right: 10px;
   display: inline-block;
   vertical-align: middle;
 }
@@ -33134,16 +33134,22 @@ fieldset[disabled] a.gx-btn {
   }
 }
 .gx-card .ant-card-head-title {
-  padding: 25px 0 0;
   text-transform: uppercase;
   font-size: 14px;
   font-weight: 600;
 }
+
+.gx-card .ant-card-head-title:only-child {
+  padding: 25px 0 0;
+}
+
 @media screen and (max-width: 991px) {
-  .gx-card .ant-card-head-title {
+.gx-card .ant-card-head-title:only-child {
     padding-top: 20px;
   }
 }
+
+
 .gx-card-body,
 .gx-card .ant-card-body {
   padding: 24px;

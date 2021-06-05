@@ -20,8 +20,8 @@ export function massagePriceChangesData(allCoinsPrices, marketDetails, coinsCurr
             const coinDetails = marketDetails?.find(
                 (marketInfo) => marketInfo.coindcx_name === metric.coinName
             );
-            if (!metric) return;
-            if (!coinDetails) return;
+            if (!metric) return null;
+            if (!coinDetails) return null;
             const modifiedData = {
                 sno: index + 1,
                 coinDCXName: coinDetails?.coindcx_name,

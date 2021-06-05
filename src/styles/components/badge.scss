@@ -1,4 +1,4 @@
-.price-change {
+.change-indicator {
   position: relative;
   color: #fff;
   display: flex;
@@ -7,11 +7,11 @@
   position: relative;
   height: 1.75rem;
 
-  .price-value {
+  .change-value {
     z-index: 2;
   }
 
-  .price-plus {
+  .change-plus {
     height: 1.75rem;
     z-index: 1;
     top: 0;
@@ -22,7 +22,7 @@
     opacity: 0.9;
   }
 
-  .price-minus {
+  .change-minus {
     height: 1.75rem;
     z-index: 1;
     top: 0;

@@ -28,20 +28,19 @@ function SidebarContent(props) {
   return (
     <>
       <div className="gx-layout-sider-header">
-      <Link to="/">
-        <img
-          alt=""
-          style={{ height: "45px" }}
-          className="gx-d-block gx-d-lg-none gx-pointer gx-mr-xs-3 gx-pt-xs-1 gx-w-logo"
-          src={"/images/logo.png"}
-        />
-      </Link>
+        <Link to="/">
+          <img
+            alt=""
+            style={{ height: "45px" }}
+            className="gx-d-block gx-d-lg-none gx-pointer gx-mr-xs-3 gx-pt-xs-1 gx-w-logo"
+            src={"/images/logo.png"}
+          />
+        </Link>
       </div>
       <div className="gx-sidebar-content">
         <div
           className={`gx-sidebar-notifications ${getNoHeaderClass(navStyle)}`}
-        >
-        </div>
+        ></div>
         <CustomScrollbars className="gx-layout-sider-scrollbar">
           <Menu
             theme={themeType === THEME_TYPE_LITE ? "lite" : "dark"}
@@ -49,16 +48,16 @@ function SidebarContent(props) {
             mode="inline"
           >
             <MenuItemGroup key="main" className="gx-menu-group" title={"Main"}>
-              {/* <Menu.Item key="dashboard">
-                <NavLink exact activeClassName="active" to="/">
-                  <i className="icon icon-home" />
-                  Dashboard
-                </NavLink>
-              </Menu.Item> */}
               <Menu.Item key="coins">
                 <NavLink activeClassName="active" to="/coins">
                   <i className="icon icon-crypto" />
                   Coins
+                </NavLink>
+              </Menu.Item>
+              <Menu.Item key="coins">
+                <NavLink activeClassName="active" to="/market-analysis">
+                  <i className="icon icon-crypto" />
+                  Market Analysis
                 </NavLink>
               </Menu.Item>
             </MenuItemGroup>

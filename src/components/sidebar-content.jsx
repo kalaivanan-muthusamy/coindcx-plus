@@ -48,15 +48,15 @@ function SidebarContent(props) {
             mode="inline"
           >
             <MenuItemGroup key="main" className="gx-menu-group" title={"Main"}>
-              <Menu.Item key="coins">
+              <Menu.Item>
                 <NavLink activeClassName="active" to="/coins">
-                  <i className="icon icon-crypto" />
+                  <i className="icon icon-badge" />
                   Coins
                 </NavLink>
               </Menu.Item>
-              <Menu.Item key="coins">
+              <Menu.Item>
                 <NavLink activeClassName="active" to="/market-analysis">
-                  <i className="icon icon-crypto" />
+                  <i className="icon icon-apps" />
                   Market Analysis
                 </NavLink>
               </Menu.Item>

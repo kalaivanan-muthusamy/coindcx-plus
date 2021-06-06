@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import './styles/main.scss';
-import './styles/style.css';
+import './styles/style.scss';
 import './styles/wieldy.less';
 import "./vendors/style";
 import App from './App';

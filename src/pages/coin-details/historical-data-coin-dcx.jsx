@@ -12,218 +12,10 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { updateHistoryData } from "./util/index";
+import { historicalDataColumns, updateHistoryData } from "./util/index";
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
-
-const columns = [
-  {
-    title: "S.N",
-    dataIndex: "sno",
-    key: "sno",
-  },
-  {
-    title: "Date",
-    dataIndex: "date",
-    key: "date",
-  },
-  {
-    title: "Open",
-    dataIndex: "open",
-    key: "open",
-    render: (text, record) => {
-      const className =
-        record?.maxMinData?.maxOpen === record?.openValue
-          ? "high-indicator"
-          : record?.maxMinData?.minOpen === record?.openValue
-          ? "low-indicator"
-          : "";
-      return (
-        <div className="high-low-indicator">
-          <span className={className}>{text}</span>
-          <span className={"high-low-indicator-bg " + className + "-bg"}></span>
-        </div>
-      );
-    },
-  },
-  {
-    title: "Close",
-    dataIndex: "close",
-    key: "close",
-    render: (text, record) => {
-      const className =
-        record?.maxMinData?.maxClose === record?.closeValue
-          ? "high-indicator"
-          : record?.maxMinData?.minClose === record?.closeValue
-          ? "low-indicator"
-          : "";
-      return (
-        <div className="high-low-indicator">
-          <span className={className}>{text}</span>
-          <span className={"high-low-indicator-bg " + className + "-bg"}></span>
-        </div>
-      );
-    },
-  },
-  {
-    title: "High",
-    dataIndex: "high",
-    key: "high",
-    render: (text, record) => {
-      const className =
-        record?.maxMinData?.maxHigh === record?.highValue
-          ? "high-indicator"
-          : record?.maxMinData?.minHigh === record?.highValue
-          ? "low-indicator"
-          : "";
-      return (
-        <div className="high-low-indicator">
-          <span className={className}>{text}</span>
-          <span className={"high-low-indicator-bg " + className + "-bg"}></span>
-        </div>
-      );
-    },
-  },
-  {
-    title: "Low",
-    dataIndex: "low",
-    key: "low",
-    render: (text, record) => {
-      const className =
-        record?.maxMinData?.maxLow === record?.lowValue
-          ? "high-indicator"
-          : record?.maxMinData?.minLow === record?.lowValue
-          ? "low-indicator"
-          : "";
-      return (
-        <div className="high-low-indicator">
-          <span className={className}>{text}</span>
-          <span className={"high-low-indicator-bg " + className + "-bg"}></span>
-        </div>
-      );
-    },
-  },
-  {
-    title: "HL Diff",
-    dataIndex: "highLowDiff",
-    key: "highLowDiff",
-    render: (text, record) => {
-      const className =
-        record?.maxMinData?.maxHLDiff === record?.highLowDiffValue
-          ? "high-indicator"
-          : record?.maxMinData?.minHLDiff === record?.highLowDiffValue
-          ? "low-indicator"
-          : "";
-      return (
-        <div className="high-low-indicator">
-          <span className={className}>{text}</span>
-          <span className={"high-low-indicator-bg " + className + "-bg"}></span>
-        </div>
-      );
-    },
-  },
-  {
-    title: "OH Diff",
-    dataIndex: "openHighDiff",
-    key: "openHighDiff",
-    render: (text, record) => {
-      const className =
-        record?.maxMinData?.maxOHDiff === record?.openHighDiffValue
-          ? "high-indicator"
-          : record?.maxMinData?.minOHDiff === record?.openHighDiffValue
-          ? "low-indicator"
-          : "";
-      return (
-        <div className="high-low-indicator">
-          {record?.highValue > record?.openValue ? (
-            <span className={`${className} text-nowrap text-success`}>
-              +{text}
-            </span>
-          ) : (
-            <span className={`${className} text-nowrap text-danger`}>
-              {text}
-            </span>
-          )}
-          <span className={"high-low-indicator-bg " + className + "-bg"}></span>
-        </div>
-      );
-    },
-  },
-  {
-    title: "OC Diff",
-    dataIndex: "openCloseDiff",
-    key: "openCloseDiff",
-    render: (text, record) => {
-      const className =
-        record?.maxMinData?.maxOCDiff === record?.openCloseDiffValue
-          ? "high-indicator"
-          : record?.maxMinData?.minOCDiff === record?.openCloseDiffValue
-          ? "low-indicator"
-          : "";
-      return (
-        <div className="high-low-indicator">
-          {record?.closeValue > record?.openValue ? (
-            <span className={`${className} text-nowrap text-success`}>
-              +{text}
-            </span>
-          ) : (
-            <span className={`${className} text-nowrap text-danger`}>
-              {text}
-            </span>
-          )}
-          <span className={"high-low-indicator-bg " + className + "-bg"}></span>
-        </div>
-      );
-    },
-  },
-  {
-    title: "LC Diff",
-    dataIndex: "lowCloseDiff",
-    key: "lowCloseDiff",
-    render: (text, record) => {
-      const className =
-        record?.maxMinData?.maxLCDiff === record?.lowCloseDiffValue
-          ? "high-indicator"
-          : record?.maxMinData?.minLCDiff === record?.lowCloseDiffValue
-          ? "low-indicator"
-          : "";
-      return (
-        <div className="high-low-indicator">
-          {record?.closeValue > record?.lowValue ? (
-            <span className={`${className} text-nowrap text-success`}>
-              +{text}
-            </span>
-          ) : (
-            <span className={`${className} text-nowrap text-danger`}>
-              {text}
-            </span>
-          )}
-          <span className={"high-low-indicator-bg " + className + "-bg"}></span>
-        </div>
-      );
-    },
-  },
-  {
-    title: "Volume",
-    dataIndex: "volume",
-    key: "volume",
-    render: (text, record) => {
-      const className =
-        record?.maxMinData?.maxVolume === record?.volumeValue
-          ? "high-indicator"
-          : record?.maxMinData?.minVolume === record?.volumeValue
-          ? "low-indicator"
-          : "";
-      return (
-        <div className="high-low-indicator">
-          <span className={className}>{text}</span>
-          <span className={"high-low-indicator-bg " + className + "-bg"}></span>
-        </div>
-      );
-    },
-  },
-];
 
 const intervalIds = [];
 
@@ -276,8 +68,8 @@ function HistoricalDataCoinDCX({ coinDetails }) {
         {
           params: {
             pair: `${coinDetails?.pair}`,
-            startTime: startTime.format("x"),
-            endTime: endTime.format("x"),
+            startTime: startTime.startOf("day").format("x"),
+            endTime: endTime.endOf("day").format("x"),
             interval: dataInterval,
           },
         }
@@ -326,7 +118,7 @@ function HistoricalDataCoinDCX({ coinDetails }) {
               size="small"
               loading={loading}
               dataSource={historicalData}
-              columns={columns}
+              columns={historicalDataColumns(dataInterval)}
             />
           </div>
         </Card>

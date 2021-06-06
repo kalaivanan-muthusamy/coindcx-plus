@@ -15,16 +15,20 @@ function MarketAnalysis(props) {
   const [loading, setLoading] = useState(false);
   const [startTime, setStartTime] = useState(moment().add(-3, "d"));
   const [endTime, setEndTime] = useState(moment());
+  const today = moment();
 
   useEffect(() => {
     getOHLCData(startTime, endTime);
   }, []);
 
   useEffect(() => {
-    if (Object.keys(ohlcData)?.length > 0) {
+    if (
+      Object.keys(ohlcData)?.length > 0 &&
+      Object.keys(props?.coinsCurrentPrice).length > 0
+    ) {
       calculateGrowthData();
     }
-  }, [ohlcData]);
+  }, [ohlcData, props?.coinsCurrentPrice]);
 
   async function getOHLCData(startTime, endTime) {
     setLoading(true);
@@ -47,8 +51,12 @@ function MarketAnalysis(props) {
 
   async function calculateGrowthData() {
     try {
-      const growthData = Object.keys(ohlcData)?.map((coinName, index) => {
-        const ohlc = ohlcData[coinName];
+      let ohlcDataClone = { ...ohlcData };
+      if (endTime.diff(today, "d") === 0) {
+        ohlcDataClone = updateTodayClosePrice(ohlcDataClone);
+      }
+      const growthData = Object.keys(ohlcDataClone)?.map((coinName, index) => {
+        const ohlc = ohlcDataClone[coinName];
         const growthRate = getGrowthRate(ohlc);
         const coinDetails = props?.marketDetails?.find(
           (coin) => coin.coindcx_name === coinName
@@ -66,11 +74,30 @@ function MarketAnalysis(props) {
           growthValue: growthRate,
         };
       });
-      console.log({ growthData });
       setGrowthData(growthData);
     } catch (err) {
       console.error(err);
     }
+  }
+
+  function updateTodayClosePrice(ohlcData) {
+    const updatedOHLCData = {};
+    Object.keys(ohlcData)?.map((coinName) => {
+      const ohlc = [...ohlcData[coinName]];
+      const todayOHLCIndex = ohlc.findIndex(
+        (d) => d.date === today.format("YYYY-MM-DD")
+      );
+      if (todayOHLCIndex >= 0) {
+        let todayOHLC = ohlc[todayOHLCIndex];
+        todayOHLC = { ...todayOHLC };
+        todayOHLC.close = parseFloat(props?.coinsCurrentPrice?.[coinName]);
+        ohlc.splice(todayOHLCIndex, 1, todayOHLC);
+      }
+      console.log({ ohlc });
+
+      updatedOHLCData[coinName] = ohlc;
+    });
+    return updatedOHLCData;
   }
 
   function onDateRangeChange([startTime, endTime]) {
@@ -82,17 +109,14 @@ function MarketAnalysis(props) {
   return (
     <Row>
       <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-        <Card
-          className="gx-card"
-          title="Growth Analysis"
-          extra={
+        <Card className="gx-card" title="Growth Analysis">
+          <div className="mt-n2 mb-2">
             <RangePicker
               onChange={onDateRangeChange}
               defaultValue={[startTime, endTime]}
-              className="me-2 mt-1"
+              className="me-2 mt-1 mb-2"
             />
-          }
-        >
+          </div>
           <div className="gx-table-responsive">
             <Table
               size="small"

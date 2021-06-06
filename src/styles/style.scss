@@ -1,79 +1,5 @@
-/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
-/* stylelint-disable no-duplicate-selectors */
-/* stylelint-disable */
-/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
-/*
-Author         : G-axon
-Template Name  : Wieldy Antd React - Admin Template
-Version        : 1.0
-*/
-/*=============================================================
-    Table of Contents:
-    =============================
-    A. Globals
-        01. Custom Animation
-        02. Colors Class
+@import './variable.scss';
 
-    B. Base
-        01. Base Styles
-        02. Row Col Styles
-        03. Margin Padding Styles
-        04. Typography Styles
-        05. Flex Styles
-
-    C. Layouts
-        01. Ant Layout Style
-        02. Header Style
-        03. Sidebar Style
-        04. Navbar(Ant Menu) Style
-        05. Footer Styles
-        06. Customizer Style
-        07. Drawer Style
-
-    D. UI Components
-        01. Alert Styles
-        02. Avatar Styles
-        03. BackTop Styles
-        04. Badges Styles
-        05. Button Styles
-        06. Cards Styles
-        07. Cascader Styles
-        08. Chart Styles
-        09. Form Styles
-        10. Icon Styles
-        11. Input Styles
-        12. List Styles
-        13. Loader Styles
-        14. Pagination Styles
-        15. Pickers Styles
-        16. Progress Styles
-        17. Slider Styles
-        18. Steps Styles
-        19. Tables Styles
-        20. Tabs Styles
-        21. Time Lines Style
-
-    E. Apps
-        01. Apps Style
-        02. Mails Apps Styles
-        03. Chat Apps Styles
-        04. Contact Apps Styles
-        05. Calendar Apps Style
-        06. Profile App Style
-        07. Wall App Style
-
-    F. Pages
-        01. Callout Styles
-        02. E-commerce Styles
-        03. Pricing Tables Styles
-        04. Login Styles
-        05. Dashboard Styles
-        06. Error Styles
-        07. Editor Styles
-        08. Testimonial Styles
-        09. Algolia Styles
-
-  =============================================================*/
 .ant-modal,
 .ant-image-preview {
   pointer-events: none;
@@ -162,11 +88,10 @@ body {
   margin: 0;
   color: #545454;
   font-size: 14px;
-  font-family: 'NoirPro', sans-serif;
-  font-variant: tabular-nums;
+  font-family: $primary-font;
+  font-weight: 400;
   line-height: 1.3;
   background-color: #f5f5f5;
-  font-feature-settings: 'tnum';
 }
 [tabindex='-1']:focus {
   outline: none !important;
@@ -1370,10 +1295,8 @@ html {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: relative;
   padding: 8px 15px 8px 37px;
   word-wrap: break-word;
@@ -1553,10 +1476,8 @@ html {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: relative;
   padding-left: 2px;
 }
@@ -1650,10 +1571,8 @@ html {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
 }
 .ant-select-auto-complete .ant-select-clear {
   right: 13px;
@@ -1664,10 +1583,8 @@ html {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: relative;
   display: inline-block;
   overflow: hidden;
@@ -1764,10 +1681,8 @@ html {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: fixed;
   right: 100px;
   bottom: 50px;
@@ -1818,10 +1733,8 @@ html {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: relative;
   display: inline-block;
   color: unset;
@@ -2030,10 +1943,8 @@ html {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: absolute;
   top: 8px;
   height: 22px;
@@ -2250,10 +2161,8 @@ html {
   margin: 0;
   padding: 0;
   color: #545454;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   color: #595959;
   font-size: 14px;
 }
@@ -4273,10 +4182,8 @@ a.ant-btn-sm {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   background: #fff;
 }
 .ant-picker-calendar-header {
@@ -4441,10 +4348,8 @@ a.ant-btn-sm {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: relative;
   background: #fff;
   border-radius: 6px;
@@ -4760,10 +4665,8 @@ a.ant-btn-sm {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
 }
 .ant-carousel .slick-slider {
   position: relative;
@@ -5033,10 +4936,8 @@ a.ant-btn-sm {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
 }
 .ant-cascader-input.ant-input {
   position: static;
@@ -5054,10 +4955,8 @@ a.ant-btn-sm {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: relative;
   display: inline-block;
   background-color: #fff;
@@ -5323,10 +5222,8 @@ a.ant-btn-sm {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: relative;
   top: -0.09em;
   display: inline-block;
@@ -5447,10 +5344,8 @@ a.ant-btn-sm {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   display: inline-block;
   line-height: unset;
   cursor: pointer;
@@ -5471,10 +5366,8 @@ a.ant-btn-sm {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   display: inline-block;
 }
 .ant-checkbox-group-item {
@@ -5525,10 +5418,8 @@ a.ant-btn-sm {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   background-color: #fafafa;
   border: 1px solid #d9d9d9;
   border-bottom: 0;
@@ -6307,10 +6198,8 @@ _:-ms-fullscreen .ant-picker-range-wrapper .ant-picker-year-panel .ant-picker-ce
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   padding: 8px 11px 8px;
   position: relative;
   display: inline-flex;
@@ -6558,10 +6447,8 @@ textarea.ant-picker-input > input {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: absolute;
   z-index: 1050;
 }
@@ -6917,10 +6804,8 @@ textarea.ant-picker-input > input {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
 .ant-divider-vertical {
@@ -7237,10 +7122,8 @@ textarea.ant-picker-input > input {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: absolute;
   top: -9999px;
   left: -9999px;
@@ -8180,10 +8063,8 @@ textarea.ant-picker-input > input {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
 }
 .ant-form legend {
   display: block;
@@ -8253,10 +8134,8 @@ textarea.ant-picker-input > input {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   margin-bottom: 20px;
   vertical-align: top;
 }
@@ -13745,9 +13624,7 @@ textarea.ant-picker-input > input {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
-  font-feature-settings: 'tnum';
   position: absolute;
   top: 0;
   right: 0;
@@ -13951,9 +13828,7 @@ textarea.ant-input-affix-wrapper {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-variant: tabular-nums;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: relative;
   display: inline-block;
   width: 100%;
@@ -14051,10 +13926,8 @@ textarea.ant-input {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: relative;
   display: table;
   width: 100%;
@@ -14542,9 +14415,7 @@ textarea.ant-input {
 }
 .ant-input-number {
   box-sizing: border-box;
-  font-variant: tabular-nums;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: relative;
   width: 100%;
   min-width: 0;
@@ -14964,10 +14835,8 @@ textarea.ant-input-number {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: relative;
 }
 .ant-list * {
@@ -15274,9 +15143,7 @@ textarea.ant-input-number {
 .ant-mentions {
   box-sizing: border-box;
   margin: 0;
-  font-variant: tabular-nums;
   list-style: none;
-  font-feature-settings: 'tnum';
   width: 100%;
   min-width: 0;
   padding: 7.9px 11px;
@@ -15451,10 +15318,8 @@ textarea.ant-mentions {
   margin: 0;
   padding: 0;
   color: #545454;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: absolute;
   top: -9999px;
   left: -9999px;
@@ -15557,9 +15422,7 @@ textarea.ant-mentions {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-variant: tabular-nums;
   line-height: 1.3;
-  font-feature-settings: 'tnum';
   margin-bottom: 0;
   padding-left: 0;
   color: #545454;
@@ -16404,10 +16267,8 @@ textarea.ant-mentions {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: fixed;
   top: 8px;
   left: 0;
@@ -16478,10 +16339,8 @@ textarea.ant-mentions {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: relative;
   top: 100px;
   width: auto;
@@ -16704,10 +16563,8 @@ textarea.ant-mentions {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: fixed;
   z-index: 1010;
   max-width: calc(100vw - 32px);
@@ -16916,10 +16773,8 @@ textarea.ant-mentions {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: relative;
   padding: 16px 24px;
   background-color: #fff;
@@ -17067,10 +16922,8 @@ textarea.ant-mentions {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
 }
 .ant-pagination ul,
 .ant-pagination ol {
@@ -17098,7 +16951,7 @@ textarea.ant-mentions {
   min-width: 32px;
   height: 32px;
   margin-right: 8px;
-  font-family: 'NoirPro', sans-serif;
+  font-family: $primary-font;
   line-height: 30px;
   text-align: center;
   vertical-align: middle;
@@ -17210,7 +17063,7 @@ textarea.ant-mentions {
   min-width: 32px;
   height: 32px;
   color: #545454;
-  font-family: 'NoirPro', sans-serif;
+  font-family: $primary-font;
   line-height: 32px;
   text-align: center;
   vertical-align: middle;
@@ -17579,10 +17432,8 @@ textarea.ant-pagination-options-quick-jumper input {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: absolute;
   top: 0;
   left: 0;
@@ -17782,10 +17633,8 @@ textarea.ant-pagination-options-quick-jumper input {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   display: inline-block;
 }
 .ant-progress-line {
@@ -17968,10 +17817,8 @@ textarea.ant-pagination-options-quick-jumper input {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   display: inline-block;
   font-size: 0;
   line-height: unset;
@@ -17988,10 +17835,8 @@ textarea.ant-pagination-options-quick-jumper input {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: relative;
   display: inline-block;
   margin-right: 8px;
@@ -18004,10 +17849,8 @@ textarea.ant-pagination-options-quick-jumper input {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: relative;
   top: 0px;
   display: inline-block;
@@ -18299,9 +18142,7 @@ span.ant-radio + * {
   box-sizing: border-box;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
-  font-feature-settings: 'tnum';
   display: inline-block;
   margin: 0;
   padding: 0;
@@ -18748,7 +18589,7 @@ span.ant-radio + * {
 }
 .ant-select-multiple .ant-select-selection-search-input,
 .ant-select-multiple .ant-select-selection-search-mirror {
-  font-family: 'NoirPro', sans-serif;
+  font-family: $primary-font;
   line-height: 1.3;
   transition: all 0.3s;
 }
@@ -18827,10 +18668,8 @@ span.ant-radio + * {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: relative;
   display: inline-block;
   cursor: pointer;
@@ -18949,10 +18788,8 @@ span.ant-radio + * {
   margin: 0;
   padding: 0;
   color: #545454;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: absolute;
   top: -9999px;
   left: -9999px;
@@ -19380,10 +19217,8 @@ span.ant-radio + * {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: relative;
   height: 12px;
   margin: 10px 6px 10px;
@@ -19605,10 +19440,8 @@ span.ant-radio + * {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: absolute;
   display: none;
   color: #038fde;
@@ -19797,10 +19630,8 @@ span.ant-radio + * {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
 }
 .ant-statistic-title {
   margin-bottom: 4px;
@@ -19810,7 +19641,7 @@ span.ant-radio + * {
 .ant-statistic-content {
   color: #535353;
   font-size: 24px;
-  font-family: 'NoirPro', sans-serif;
+  font-family: $primary-font;
 }
 .ant-statistic-content-value {
   display: inline-block;
@@ -19847,10 +19678,8 @@ span.ant-radio + * {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   display: flex;
   width: 100%;
   font-size: 0;
@@ -19883,7 +19712,7 @@ span.ant-radio + * {
   height: 32px;
   margin: 0 8px 0 0;
   font-size: 16px;
-  font-family: 'NoirPro', sans-serif;
+  font-family: $primary-font;
   line-height: 32px;
   text-align: center;
   border: 1px solid rgba(0, 0, 0, 0.25);
@@ -20619,10 +20448,8 @@ span.ant-radio + * {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: relative;
   display: inline-block;
   box-sizing: border-box;
@@ -20928,10 +20755,8 @@ span.ant-radio + * {
   margin: 0;
   padding: 0;
   color: #545454;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: relative;
   z-index: 0;
   font-size: 14px;
@@ -21145,10 +20970,8 @@ td.ant-table-column-sort {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   min-width: 120px;
   background-color: #fff;
   border-radius: 6px;
@@ -21797,10 +21620,8 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: absolute;
   top: -9999px;
   left: -9999px;
@@ -21914,10 +21735,8 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   display: flex;
   overflow: hidden;
 }
@@ -22103,10 +21922,8 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   display: inline-block;
   height: auto;
   margin-right: 8px;
@@ -22349,9 +22166,7 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
   box-sizing: border-box;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
-  font-feature-settings: 'tnum';
   margin: 0;
   padding: 0;
   list-style: none;
@@ -22583,10 +22398,8 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: absolute;
   z-index: 1070;
   display: block;
@@ -22850,10 +22663,8 @@ tr.ant-table-expanded-row .ant-descriptions-view table {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: relative;
   display: flex;
   align-items: stretch;
@@ -23134,10 +22945,8 @@ span.ant-transfer-list-search-action {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: relative;
   top: -0.09em;
   display: inline-block;
@@ -23258,10 +23067,8 @@ span.ant-transfer-list-search-action {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   display: inline-block;
   line-height: unset;
   cursor: pointer;
@@ -23282,10 +23089,8 @@ span.ant-transfer-list-search-action {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   display: inline-block;
 }
 .ant-tree-checkbox-group-item {
@@ -23336,10 +23141,8 @@ span.ant-transfer-list-search-action {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   background: #fff;
   border-radius: 6px;
   transition: background-color 0.3s;
@@ -23541,10 +23344,8 @@ span.ant-transfer-list-search-action {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   position: relative;
   top: -0.09em;
   display: inline-block;
@@ -23665,10 +23466,8 @@ span.ant-transfer-list-search-action {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   display: inline-block;
   line-height: unset;
   cursor: pointer;
@@ -23689,10 +23488,8 @@ span.ant-transfer-list-search-action {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   display: inline-block;
 }
 .ant-select-tree-checkbox-group-item {
@@ -23761,10 +23558,8 @@ span.ant-transfer-list-search-action {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   background: #fff;
   border-radius: 6px;
   transition: background-color 0.3s;
@@ -23971,7 +23766,7 @@ h1.ant-typography,
 .ant-typography h1 {
   margin-bottom: 0.5em;
   color: #535353;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 38px;
   line-height: 1.23;
 }
@@ -24240,10 +24035,8 @@ div.ant-typography-edit-content.ant-typography-rtl {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   line-height: 1.3;
   list-style: none;
-  font-feature-settings: 'tnum';
   outline: 0;
 }
 .ant-upload p {
@@ -24375,9 +24168,7 @@ div.ant-typography-edit-content.ant-typography-rtl {
   padding: 0;
   color: #545454;
   font-size: 14px;
-  font-variant: tabular-nums;
   list-style: none;
-  font-feature-settings: 'tnum';
   line-height: 1.3;
 }
 .ant-upload-list::before {
@@ -27067,7 +26858,7 @@ hr {
 }
 .cke_editable,
 .cke_editor_editor2 {
-  font-family: 'NoirPro', sans-serif !important;
+  font-family: $primary-font !important;
 }
 .gx-top2 {
   position: relative;

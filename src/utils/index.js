@@ -15,6 +15,7 @@ export function massagePriceChangesData(allCoinsPrices, marketDetails, coinsCurr
         }
     });
     const metrics = Object.values(dataByCoin);
+    const allCoinDetails = {};
     metrics
         .map((metric, index) => {
             const coinDetails = marketDetails?.find(
@@ -45,7 +46,7 @@ export function massagePriceChangesData(allCoinsPrices, marketDetails, coinsCurr
                     currency: "INR",
                 }).format(metric?.low),
             };
-            dataByCoin[metric.coinName] = modifiedData;
+            allCoinDetails[metric.coinName] = modifiedData;
         })
-    return dataByCoin
+    return allCoinDetails
 }

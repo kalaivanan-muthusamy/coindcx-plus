@@ -25,7 +25,7 @@ function Main(props) {
 
   useEffect(() => {
     let coinPriceChangeIntervalId;
-    if (props?.marketDetails) {
+    if (props?.marketDetails && props?.coinsCurrentPrice) {
       getPriceChanges();
       coinPriceChangeIntervalId = setInterval(() => {
         getPriceChanges();

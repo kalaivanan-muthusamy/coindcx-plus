@@ -1,5 +1,4 @@
 import { AutoComplete, Layout, Popover } from "antd";
-import SearchBox from "./search-box";
 import HorizontalMenu from "./horizontal-nav";
 import { Link, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
@@ -9,18 +8,25 @@ const { Header } = Layout;
 
 function AppHeader(props) {
   const [filteredCoins, setFilteredCoins] = useState(null);
+  const [searchText, setSearchText] = useState("");
+  const [popoverOpen, setPopoverOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const history = useHistory();
 
   function onCoinSelect(val) {
-    console.log({ val})
     const marketInfo = props?.marketDetails?.find(
       (a) => a.coindcx_name === val
     );
     props?.setSelectedCoin(val, marketInfo?.pair);
+    setOpen(false);
+    setSearchText("");
+    setFilteredCoins(props?.allCoins);
+    setPopoverOpen(false);
     history.push(`/coins/${marketInfo?.coindcx_name}`);
   }
 
   function onSearch(searchText) {
+    setSearchText(searchText);
     const stext = searchText.toLowerCase();
     setFilteredCoins(
       props?.allCoins?.filter(
@@ -49,24 +55,28 @@ function AppHeader(props) {
             <Link to="/">
               <img
                 alt=""
-                style={{ height: "55px" }}
+                style={{ height: "35px" }}
                 className="gx-d-block gx-d-lg-none gx-pointer gx-mr-xs-3 gx-pt-xs-1 gx-w-logo"
-                src={"/images/logo.png"}
+                src={"/logo.svg"}
               />
             </Link>
             <Link to="/">
               <img
                 alt=""
-                style={{ height: "40px" }}
+                style={{ height: "25px" }}
                 className="gx-d-none gx-d-lg-block gx-pointer gx-mr-xs-5 gx-logo"
-                src={"/images/logo.png"}
+                src={"/logo.svg"}
               />
             </Link>
             <div className="gx-header-search gx-d-none gx-d-lg-flex">
               <AutoComplete
+                open={open}
+                value={searchText}
                 style={{ width: 250 }}
                 options={filteredCoins || props?.allCoins || []}
                 placeholder="Search Coin..."
+                onFocus={() => setOpen(true)}
+                onBlur={() => setOpen(false)}
                 onSelect={onCoinSelect}
                 onSearch={onSearch}
               ></AutoComplete>
@@ -77,12 +87,18 @@ function AppHeader(props) {
                 <Popover
                   overlayClassName="gx-popover-horizantal"
                   placement="bottomRight"
+                  onClick={() => setPopoverOpen(!popoverOpen)}
+                  visible={popoverOpen}
                   content={
                     <div className="gx-d-flex">
                       <AutoComplete
+                        open={open}
+                        value={searchText}
                         styleName="gx-popover-search-bar"
                         placeholder="Search Coin..."
                         style={{ width: 250 }}
+                        onFocus={() => setOpen(true)}
+                        onBlur={() => setOpen(false)}
                         options={filteredCoins || props?.allCoins || []}
                         onSelect={onCoinSelect}
                         onSearch={onSearch}

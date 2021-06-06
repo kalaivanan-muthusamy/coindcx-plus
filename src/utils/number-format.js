@@ -1,4 +1,4 @@
-export function formatNumber(value, region) {
+export function formatNumber(value, region = 'en-IN') {
     return new Intl.NumberFormat(region).format(value)
 }
 

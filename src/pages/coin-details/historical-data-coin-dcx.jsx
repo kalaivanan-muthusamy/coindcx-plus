@@ -13,6 +13,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { historicalDataColumns, updateHistoryData } from "./util/index";
+import { INTERVALS_LIST } from './../../constants/index';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -25,22 +26,6 @@ function HistoricalDataCoinDCX({ coinDetails }) {
   const [dataInterval, setDataInterval] = useState("1d");
   const [startTime, setStartTime] = useState(moment().add(-10, "d"));
   const [endTime, setEndTime] = useState(moment());
-
-  const intervalsList = [
-    "1m",
-    "5m",
-    "15m",
-    "30m",
-    "1h",
-    "2h",
-    "4h",
-    "6h",
-    "8h",
-    "1d",
-    "3d",
-    "1w",
-    "1M",
-  ];
 
   useEffect(() => {
     loadInitial();
@@ -98,7 +83,7 @@ function HistoricalDataCoinDCX({ coinDetails }) {
           style={{ width: 120 }}
           onChange={onIntervalChange}
         >
-          {intervalsList?.map((a) => (
+          {INTERVALS_LIST?.map((a) => (
             <Option key={a} value={a}>
               {a}
             </Option>

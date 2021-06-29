@@ -6,6 +6,7 @@ import moment from "moment";
 import { getGrowthRate, growthDataColumns } from "./utils/index";
 import { formatCurrency } from "../../utils/number-format";
 import { formatNumber } from "./../../utils/number-format";
+import CandleAnalysis from "./candle-analysis";
 
 const { RangePicker } = DatePicker;
 
@@ -93,8 +94,6 @@ function MarketAnalysis(props) {
         todayOHLC.close = parseFloat(props?.coinsCurrentPrice?.[coinName]);
         ohlc.splice(todayOHLCIndex, 1, todayOHLC);
       }
-      console.log({ ohlc });
-
       updatedOHLCData[coinName] = ohlc;
     });
     return updatedOHLCData;
@@ -107,28 +106,35 @@ function MarketAnalysis(props) {
   }
 
   return (
-    <Row>
-      <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-        <Card className="gx-card" title="Growth Analysis">
-          <div className="mt-n2 mb-2">
-            <RangePicker
-              onChange={onDateRangeChange}
-              defaultValue={[startTime, endTime]}
-              className="me-2 mt-1 mb-2"
-            />
-          </div>
-          <div className="gx-table-responsive">
-            <Table
-              size="small"
-              scroll={{ x: "100%" }}
-              loading={loading}
-              dataSource={growthData}
-              columns={growthDataColumns}
-            ></Table>
-          </div>
-        </Card>
-      </Col>
-    </Row>
+    <>
+      <Row>
+        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+          <Card className="gx-card" title="Growth Analysis">
+            <div className="mt-n2 mb-2">
+              <RangePicker
+                onChange={onDateRangeChange}
+                defaultValue={[startTime, endTime]}
+                className="me-2 mt-1 mb-2"
+              />
+            </div>
+            <div className="gx-table-responsive">
+              <Table
+                size="small"
+                scroll={{ x: "100%" }}
+                loading={loading}
+                dataSource={growthData}
+                columns={growthDataColumns}
+              ></Table>
+            </div>
+          </Card>
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+          <CandleAnalysis />
+        </Col>
+      </Row>
+    </>
   );
 }
 

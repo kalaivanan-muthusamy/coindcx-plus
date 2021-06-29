@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import ChangeIndicator from '../../../components/change-indicator';
+import SyntaxHighlighter from 'react-syntax-highlighter';
 
 export const growthDataColumns = [
     {
@@ -37,6 +38,58 @@ export const growthDataColumns = [
         key: "growth",
         sorter: (a, b) => a.growthValue - b.growthValue,
         render: (text, record) => <ChangeIndicator change={record?.growthValue} />
+    },
+]
+
+
+export const candleDataColumns = [
+    {
+        title: "S.No",
+        dataIndex: "sno",
+        key: "sno",
+    },
+    {
+        title: "Name",
+        dataIndex: "pair",
+        key: "pair",
+        render: (text, record) => (
+            <div>
+                <Link to={`/coins/${record?.pair}`}>{record?.pair}</Link>
+                <div className="text-secondary">({record?.pair})</div>
+            </div>
+        )
+    },
+    {
+        title: "Candle Combinations",
+        dataIndex: "pair",
+        key: "pair",
+        render: (counts, record) => (
+            <>
+                <div>RED:
+                    <SyntaxHighlighter language="json">
+                        {JSON.stringify(record?.RED)}
+                    </SyntaxHighlighter>
+                </div>
+                <div>GREEN:
+                    <SyntaxHighlighter language="json">
+                        {JSON.stringify(record?.GREEN)}
+                    </SyntaxHighlighter>
+                </div>
+            </>
+        )
+
+    },
+    {
+        title: "Max Red",
+        dataIndex: "maxRed",
+        key: "maxRed",
+        sorter: (a, b) => a.maxRed - b.maxRed,
+    },
+    {
+        title: "Max Green",
+        dataIndex: "maxGreen",
+        key: "maxGreen",
+        sorter: (a, b) => a.maxGreen - b.maxGreen,
     },
 ]
 

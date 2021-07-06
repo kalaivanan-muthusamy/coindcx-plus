@@ -7,6 +7,7 @@ import { getGrowthRate, growthDataColumns } from "./utils/index";
 import { formatCurrency } from "../../utils/number-format";
 import { formatNumber } from "./../../utils/number-format";
 import CandleAnalysis from "./candle-analysis";
+import StrategyTester from './strategy-tester';
 
 const { RangePicker } = DatePicker;
 
@@ -132,6 +133,11 @@ function MarketAnalysis(props) {
       <Row>
         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
           <CandleAnalysis />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+          <StrategyTester />
         </Col>
       </Row>
     </>

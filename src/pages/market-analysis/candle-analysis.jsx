@@ -65,7 +65,7 @@ function CandleAnalysis() {
   }
 
   return (
-    <Card className="gx-card" title="Candle Analysis">
+    <Card className="gx-card" title="Candle Fluctuation Analysis">
       <div className="mt-n2 mb-3">
         <Select
           className="me-2"

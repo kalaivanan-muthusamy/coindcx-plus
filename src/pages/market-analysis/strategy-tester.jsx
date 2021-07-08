@@ -66,7 +66,7 @@ function StrategyTester() {
         data,
         request: { responseURL },
       } = await axios.get(
-        "http://coinanalysis-api.herokuapp.com/strategy-tester",
+        "https://coinanalysis-api.herokuapp.com/strategy-tester",
         {
           params: {
             interval: formInputs?.interval,

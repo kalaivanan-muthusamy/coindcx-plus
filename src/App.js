@@ -14,6 +14,8 @@ import { reducer } from './reducers/index';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import Coins from "./pages/coins";
 import MarketAnalysis from './pages/market-analysis/index';
+import MarketWatch from './pages/market-watch/index';
+import Preferences from './pages/preferences/index';
 
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -44,6 +46,12 @@ export default function App() {
             </Route>
             <Route path="/coins/:coinSymbol">
               <CoinDetails />
+            </Route>
+            <Route path="/market-watch">
+              <MarketWatch />
+            </Route>
+            <Route path="/preferences">
+              <Preferences />
             </Route>
           </Switch>
         </Main>

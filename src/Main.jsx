@@ -10,7 +10,6 @@ const { Content, Footer } = Layout;
 
 function Main(props) {
   const [loading, setIsLoading] = useState(false);
-  
 
   useEffect(() => {
     props.getAllCoinDetails();
@@ -25,7 +24,7 @@ function Main(props) {
 
   useEffect(() => {
     let coinPriceChangeIntervalId;
-    if (props?.marketDetails && props?.coinsCurrentPrice) {
+    if (props?.marketMetaDetails && props?.coinsCurrentPrice) {
       getPriceChanges();
       coinPriceChangeIntervalId = setInterval(() => {
         getPriceChanges();
@@ -34,7 +33,7 @@ function Main(props) {
     return () => {
       clearInterval(coinPriceChangeIntervalId);
     };
-  }, [props?.marketDetails, props?.coinsCurrentPrice]);
+  }, [props?.marketMetaDetails, props?.coinsCurrentPrice]);
 
   async function getCoinPrices() {
     try {
@@ -55,7 +54,7 @@ function Main(props) {
       );
       const priceChanges = massagePriceChangesData(
         allCoinsPrices,
-        props?.marketDetails,
+        props?.marketMetaDetails,
         props?.coinsCurrentPrice
       );
       props?.setCoinsPriceChanges(priceChanges);
@@ -71,7 +70,7 @@ function Main(props) {
         <AppHeader />
         <Content className="gx-layout-content gx-container-wrap">
           <div className="gx-main-content-wrapper-full">
-            {props?.marketDetails?.length > 0 && !loading ? (
+            {props?.marketMetaDetails?.length > 0 && !loading ? (
               <>{props.children}</>
             ) : (
               <Card className="gx-card text-center">
@@ -89,15 +88,15 @@ function Main(props) {
 const mapStateToProps = (state) => {
   return {
     allCoins: state.allCoins,
-    marketDetails: state.marketDetails,
+    marketMetaDetails: state.marketMetaDetails,
     selectedCoin: state.selectedCoin,
-    coinsCurrentPrice: state.coinsCurrentPrice
+    coinsCurrentPrice: state.coinsCurrentPrice,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getAllCoinDetails: () => dispatch({ type: "MARKET_DETAILS_REQUEST" }),
+    getAllCoinDetails: () => dispatch({ type: "MARKET_META_DETAILS_REQUEST" }),
     setCoinsCurrentPrice: (coinsCurrentPrice) =>
       dispatch({
         type: "SET_COINS_CURRENT_PRICE",

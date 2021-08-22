@@ -1,3 +1,8 @@
+export const MARKETS = [
+    'INR',
+    'USDT'
+]
+
 export const INTERVALS_LIST = [
     "1m",
     "5m",

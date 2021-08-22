@@ -2,10 +2,10 @@
 import { NAV_STYLE_BELOW_HEADER, THEME_TYPE_SEMI_DARK } from './../constants/theme-settings';
 
 const initialState = {
-    marketDetails: [],
+    marketMetaDetails: [],
     allCoins: [],
     selectedCoin: null,
-    marketDetailsLoading: false,
+    marketMetaDetailsLoading: false,
     coinsCurrentPrice: {},
     coinsPriceChanges: {},
     uiSettings: {
@@ -18,10 +18,10 @@ const initialState = {
 
 export function reducer(state = initialState, action) {
     switch (action.type) {
-        case 'MARKET_DETAILS_REQUEST':
-            return { ...state, marketDetailsLoading: true };
-        case 'MARKET_DETAILS_FETCH_SUCCESS':
-            return { ...state, marketDetails: action.marketDetails, allCoins: action.allCoins, marketDetailsLoading: false };
+        case 'MARKET_META_DETAILS_REQUEST':
+            return { ...state, marketMetaDetailsLoading: true };
+        case 'MARKET_META_DETAILS_FETCH_SUCCESS':
+            return { ...state, marketMetaDetails: action.marketDetails, allCoins: action.allCoins, marketMetaDetailsLoading: false };
         case 'SET_SELECTED_COINN':
             return { ...state, selectedCoin: action.coinSymbol, coinPair: action.coinPair }
         case 'TOGGLE_COLLAPSED_NAV':

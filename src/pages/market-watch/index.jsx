@@ -35,7 +35,7 @@ function MarketWatch({ marketMetaDetails }) {
       );
       const selectedMarkets =
         filteredCoins?.length > 50
-          ? shuffleArray(filteredCoins)?.slice(0, 50)
+          ? shuffleArray(filteredCoins)?.slice(0, 100)
           : filteredCoins;
       console.log(selectedMarkets);
       const responses = selectedMarkets.map(async (marketMeta, index) => {

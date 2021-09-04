@@ -1,8 +1,9 @@
-import { AutoComplete, Layout, Popover } from "antd";
+import { AutoComplete, Layout, Popover, Menu } from "antd";
 import HorizontalMenu from "./horizontal-nav";
-import { Link, useHistory } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { useState } from "react";
+import { THEME_TYPE_LITE } from "../constants/theme-settings";
 
 const { Header } = Layout;
 
@@ -12,9 +13,10 @@ function AppHeader(props) {
   const [popoverOpen, setPopoverOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const history = useHistory();
+  const themeType = props?.uiSettings?.themeType;
 
   function onCoinSelect(val) {
-    const marketInfo = props?.marketDetails?.find(
+    const marketInfo = props?.marketMetaDetails?.find(
       (a) => a.coindcx_name === val
     );
     props?.setSelectedCoin(val, marketInfo?.pair);
@@ -112,7 +114,19 @@ function AppHeader(props) {
                   </span>
                 </Popover>
               </li>
-              <li className="gx-user-nav">{/* <UserInfo /> */}</li>
+              <li className="gx-user-nav">
+                <Menu
+                  selectedKeys={["/coins/TRX"]}
+                  mode="inline"
+                >
+                  <Menu.Item>
+                    <NavLink to="/auth">
+                      <i className="icon icon-user" />
+                      Sign In
+                    </NavLink>
+                  </Menu.Item>
+                </Menu>
+              </li>
             </ul>
           </div>
         </div>
@@ -132,7 +146,7 @@ const mapStateToProps = (state) => {
   return {
     allCoins: state.allCoins,
     uiSettings: state.uiSettings,
-    marketDetails: state.marketDetails,
+    marketMetaDetails: state.marketMetaDetails,
   };
 };
 

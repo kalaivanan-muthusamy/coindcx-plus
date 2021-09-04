@@ -61,7 +61,7 @@ function MarketAnalysis(props) {
       const growthData = Object.keys(ohlcDataClone)?.map((coinName, index) => {
         const ohlc = ohlcDataClone[coinName];
         const growthRate = getGrowthRate(ohlc);
-        const coinDetails = props?.marketDetails?.find(
+        const coinDetails = props?.marketMetaDetails?.find(
           (coin) => coin.coindcx_name === coinName
         );
         return {
@@ -153,7 +153,7 @@ function MarketAnalysis(props) {
 const mapStateToProps = (state) => {
   return {
     coinsCurrentPrice: state.coinsCurrentPrice,
-    marketDetails: state.marketDetails,
+    marketMetaDetails: state.marketMetaDetails,
     coinsPriceChanges: state.coinsPriceChanges,
   };
 };

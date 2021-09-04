@@ -9,7 +9,7 @@ function Coins(props) {
         <Table
           size="small"
           scroll={{ x: "100%" }}
-          loading={props?.marketDetails ? false : true}
+          loading={props?.marketMetaDetails ? false : true}
           dataSource={Object.values(props?.coinsPriceChanges || {})}
           columns={coinsColumns}
         />
@@ -21,7 +21,7 @@ function Coins(props) {
 const mapStateToProps = (state) => {
   return {
     coinsCurrentPrice: state.coinsCurrentPrice,
-    marketDetails: state.marketDetails,
+    marketMetaDetails: state.marketMetaDetails,
     coinsPriceChanges: state.coinsPriceChanges,
   };
 };

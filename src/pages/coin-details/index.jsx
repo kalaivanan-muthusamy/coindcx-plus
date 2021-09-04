@@ -49,7 +49,7 @@ const { TabPane } = Tabs;
 function CoinDetails(props) {
   const { coinSymbol } = useParams();
   const selectedCoin = props.selectedCoin;
-  const selectedCoinDetails = props?.marketDetails?.find(
+  const selectedCoinDetails = props?.marketMetaDetails?.find(
     (a) => a.coindcx_name === selectedCoin
   );
   const coinDetails = props?.coinsPriceChanges?.[selectedCoin];
@@ -59,7 +59,7 @@ function CoinDetails(props) {
 
   useEffect(() => {
     const coinName = coinSymbol.toUpperCase();
-    const marketInfo = props?.marketDetails?.find(
+    const marketInfo = props?.marketMetaDetails?.find(
       (a) => a.coindcx_name === coinName
     );
     if (!marketInfo) return history.push("/coins");
@@ -68,12 +68,12 @@ function CoinDetails(props) {
 
   useEffect(() => {
     updateCoinsData(searchText);
-  }, [props?.marketDetails, props?.coinsCurrentPrice]);
+  }, [props?.marketMetaDetails, props?.coinsCurrentPrice]);
 
   function onTabChange() {}
 
   function updateCoinsData(searchText) {
-    let marketDetails = props?.marketDetails;
+    let marketDetails = props?.marketMetaDetails;
     if (searchText) {
       marketDetails = marketDetails?.filter((coinInfo) => {
         const fullName = coinInfo?.coindcx_name?.toLowerCase();
@@ -229,7 +229,7 @@ function CoinDetails(props) {
 const mapStateToProps = (state) => {
   return {
     allCoins: state.allCoins,
-    marketDetails: state.marketDetails,
+    marketMetaDetails: state.marketMetaDetails,
     selectedCoin: state.selectedCoin,
     coinsCurrentPrice: state.coinsCurrentPrice,
     coinsPriceChanges: state.coinsPriceChanges,

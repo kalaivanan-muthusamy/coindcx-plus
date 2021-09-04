@@ -16,6 +16,7 @@ import Coins from "./pages/coins";
 import MarketAnalysis from './pages/market-analysis/index';
 import MarketWatch from './pages/market-watch/index';
 import Preferences from './pages/preferences/index';
+import Auth from './pages/auth/index';
 
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -35,6 +36,9 @@ export default function App() {
       <Router>
         <Main>
           <Switch>
+          <Route exact path="/auth">
+              <Auth />
+            </Route>
             <Route exact path="/">
               <Redirect to="/coins" />
             </Route>

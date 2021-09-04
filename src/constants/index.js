@@ -1,6 +1,6 @@
 export const MARKETS = [
     'INR',
-    'USDT'
+    // 'USDT'
 ]
 
 export const INTERVALS_LIST = [

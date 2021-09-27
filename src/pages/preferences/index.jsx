@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 function Preferences({ marketMetaDetails }) {
   const [loading, setLoading] = useState(false);
   const [targetKeys, setTargetKeys] = useState(
-    JSON.parse(localStorage.getItem("preferredCoins") || [])
+    JSON.parse(localStorage.getItem("preferredCoins") || '[]')
   );
   const [selectedKeys, setSelectedKeys] = useState([]);
   const allSources = marketMetaDetails.map((market) => ({

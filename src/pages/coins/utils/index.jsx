@@ -67,6 +67,7 @@ export const coinsColumns = [
     title: "S.No",
     dataIndex: "sno",
     key: "sno",
+    sorter: (a, b) => a.sno - b.sno,
   },
   {
     title: "Name",
@@ -76,8 +77,8 @@ export const coinsColumns = [
   },
   {
     title: "Symbol",
-    dataIndex: "symbol",
-    key: "symbol",
+    dataIndex: "displayName",
+    key: "displayName",
     render: (text, record) => <Link to={`/coins/${record?.coinDCXName}`}>{text}</Link>,
     ...getColumnSearchProps("symbol"),
   },

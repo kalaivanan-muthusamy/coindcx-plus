@@ -13,7 +13,9 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { historicalDataColumns, updateHistoryData } from "./util/index";
-import { INTERVALS_LIST } from './../../constants/index';
+import { INTERVALS_LIST } from "./../../constants/index";
+import { serviceCall } from "../../utils/api-call";
+import { dateFormatter } from './../../utils/data';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -22,6 +24,7 @@ const intervalIds = [];
 
 function HistoricalDataCoinDCX({ coinDetails }) {
   const [historicalData, setHistoricalData] = useState([]);
+  const [volumeTrendData, setVolumeTrendData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [dataInterval, setDataInterval] = useState("1d");
   const [startTime, setStartTime] = useState(moment().add(-10, "d"));
@@ -39,6 +42,7 @@ function HistoricalDataCoinDCX({ coinDetails }) {
     intervalIds?.map((id) => clearInterval(id));
     setLoading(true);
     await getHistoricalData();
+    await getVolumeTrendData();
     setLoading(false);
     const id = setInterval(() => {
       getHistoricalData();
@@ -60,6 +64,18 @@ function HistoricalDataCoinDCX({ coinDetails }) {
         }
       );
       setHistoricalData(updateHistoryData(ohlcData));
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function getVolumeTrendData() {
+    try {
+      const { data } = await serviceCall(
+        "GET",
+        `candles/volume-trend/${coinDetails?.pair}`
+      );
+      setVolumeTrendData(data);
     } catch (err) {
       console.error(err);
     }
@@ -106,6 +122,28 @@ function HistoricalDataCoinDCX({ coinDetails }) {
               columns={historicalDataColumns(dataInterval)}
             />
           </div>
+        </Card>
+      </div>
+
+      <div className="col-sm-12">
+        <Card className="gx-card" title="Volume Trend">
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart
+              margin={{ top: 5, right: 30, left: 0, bottom: 5 }}
+              data={volumeTrendData}
+            >
+              <Line
+                name="Volume"
+                type="monotone"
+                dataKey="volume"
+                stroke="#bbb"
+              />
+              <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+              <XAxis dataKey="dateTime" />
+              <YAxis />
+              <Tooltip />
+            </LineChart>
+          </ResponsiveContainer>
         </Card>
       </div>
 

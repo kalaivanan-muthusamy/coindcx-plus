@@ -1,18 +1,14 @@
 import { put, takeEvery } from 'redux-saga/effects'
-import axios from 'axios';
-import { MARKETS } from './../constants/index';
+import { serviceCall } from '../utils/api-call';
 
 function* fetchMarketMetaDetails() {
     try {
-        const { data: markedDetailsData } = yield axios.get(
-            "https://coinanalysis-api.netlify.app/.netlify/functions/market_details"
-        );
-        const marketDetails = markedDetailsData
-            ?.filter((c) => MARKETS.includes(c.base_currency_short_name))
+        const { data: markedDetailsData } = yield serviceCall('GET', 'markets');
+        const marketDetails = markedDetailsData;
         const allCoins = marketDetails
             .map((a) => ({
                 label: `${a?.target_currency_name} (${a?.target_currency_short_name})`,
-                value: a?.coindcx_name,
+                value: a?.pair,
             }));
         yield put({ type: "MARKET_META_DETAILS_FETCH_SUCCESS", marketDetails, allCoins });
     } catch (e) {

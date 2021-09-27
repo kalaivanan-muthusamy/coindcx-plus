@@ -11,12 +11,10 @@ import { connect } from "react-redux";
 import { Input } from "antd";
 
 import HistoricalDataCoinDCX from "./historical-data-coin-dcx";
-import OrderBook from "./order-books";
-import TradeHistory from "./trade-history";
 import "../../styles/pages/index.scss";
-import Ratings from "./ratings";
 import HistoryCandleChart from "./history-candle-chart";
 import ChangeIndicator from "./../../components/change-indicator";
+import { roundOff } from './../../utils/number-format';
 
 const { Search } = Input;
 
@@ -87,10 +85,7 @@ function CoinDetails(props) {
     const marketStatus = marketDetails.map((market) => ({
       coinDCXName: market?.coindcx_name,
       coin: market?.target_currency_name,
-      price: new Intl.NumberFormat("en-IN", {
-        style: "currency",
-        currency: market?.base_currency_short_name,
-      }).format(props?.coinsCurrentPrice?.[market?.coindcx_name]),
+      price: roundOff(props?.coinsCurrentPrice?.[market?.coindcx_name], market?.base_currency_precision) + ' ' + market?.base_currency_short_name,
       change:
         props?.coinsPriceChanges?.[market?.coindcx_name]?.percentageChangeValue,
     }));
@@ -157,10 +152,12 @@ function CoinDetails(props) {
                         </span>
                       </Title>
                       <h2 className="gx-fs-xxxl gx-font-weight-medium">
-                        {new Intl.NumberFormat("en-IN", {
-                          style: "currency",
-                          currency: "INR",
-                        }).format(props?.coinsCurrentPrice?.[coinSymbol])}
+                        {
+                          roundOff(props?.coinsCurrentPrice?.[coinSymbol], selectedCoinDetails?.base_currency_precision)  + " "
+                        }
+                        {
+                          <small className="h5">{selectedCoinDetails?.base_currency_short_name}</small>
+                        }
                         <span
                           className={`h4 ms-2 gx-chart-${
                             coinDetails?.percentageChangeValue > 0
@@ -203,15 +200,6 @@ function CoinDetails(props) {
             <Tabs defaultActiveKey="1" onChange={onTabChange}>
               <TabPane tab="Historical Data" key="1">
                 <HistoricalDataCoinDCX coinDetails={selectedCoinDetails} />
-              </TabPane>
-              <TabPane tab="Ratings" key="2">
-                <Ratings coinDetails={selectedCoinDetails} />
-              </TabPane>
-              <TabPane tab="Order Book" key="3">
-                <OrderBook coinDetails={selectedCoinDetails} />
-              </TabPane>
-              <TabPane tab="Trade History" key="4">
-                <TradeHistory coinDetails={selectedCoinDetails} />
               </TabPane>
             </Tabs>
           </Col>

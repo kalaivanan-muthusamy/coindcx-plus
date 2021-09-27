@@ -1,9 +1,13 @@
+import { roundOff } from './number-format';
+
 export function massagePriceChangesData(allCoinsPrices, marketDetails, coinsCurrentPrice) {
     let dataByCoin = {};
+    const allCoins = marketDetails.map(market => market.coindcx_name);
+    console.log({ allCoins });
     Object.keys(allCoinsPrices).map((key) => {
         const coinMetaArray = key.split("_");
         const coin = coinMetaArray[0];
-        if (!coin.endsWith("INR")) return false;
+        if (!allCoins.includes(coin)) return false;
         const metric = coinMetaArray[1];
         if (dataByCoin[coin]) {
             dataByCoin[coin] = {
@@ -14,6 +18,10 @@ export function massagePriceChangesData(allCoinsPrices, marketDetails, coinsCurr
             dataByCoin[coin] = { coinName: coin, [metric]: allCoinsPrices[key] };
         }
     });
+
+    console.log({ dataByCoin })
+
+
     const metrics = Object.values(dataByCoin);
     const allCoinDetails = {};
     metrics
@@ -26,6 +34,7 @@ export function massagePriceChangesData(allCoinsPrices, marketDetails, coinsCurr
             const modifiedData = {
                 sno: index + 1,
                 coinDCXName: coinDetails?.coindcx_name,
+                displayName: coinDetails?.target_currency_short_name  + "_" + coinDetails?.base_currency_short_name,
                 symbol: coinDetails?.target_currency_short_name,
                 name: coinDetails?.target_currency_name,
                 priceValue: coinsCurrentPrice?.[metric?.coinName],
@@ -33,18 +42,9 @@ export function massagePriceChangesData(allCoinsPrices, marketDetails, coinsCurr
                 lowValue: metric?.low,
                 volume: new Intl.NumberFormat('en-IN').format(metric?.vol),
                 percentageChangeValue: metric?.percent,
-                price: new Intl.NumberFormat("en-IN", {
-                    style: "currency",
-                    currency: "INR",
-                }).format(coinsCurrentPrice?.[metric?.coinName]),
-                high: new Intl.NumberFormat("en-IN", {
-                    style: "currency",
-                    currency: "INR",
-                }).format(metric?.high),
-                low: new Intl.NumberFormat("en-IN", {
-                    style: "currency",
-                    currency: "INR",
-                }).format(metric?.low),
+                price: roundOff(coinsCurrentPrice?.[metric?.coinName], coinDetails?.base_currency_precision) + ' ' + coinDetails?.base_currency_short_name,
+                high: roundOff(metric?.high, coinDetails?.base_currency_precision) + ' ' + coinDetails?.base_currency_short_name,
+                low: roundOff(metric?.low, coinDetails?.base_currency_precision) + ' ' + coinDetails?.base_currency_short_name,
             };
             allCoinDetails[metric.coinName] = modifiedData;
         })
